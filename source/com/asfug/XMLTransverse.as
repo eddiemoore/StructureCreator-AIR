@@ -14,8 +14,8 @@
 	import flash.filesystem.FileStream;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.text.TextField;
-	import fl.controls.TextArea;
+	//import flash.text.TextField;
+	//import fl.controls.TextArea;
 	
 	public class XMLTransverse extends MovieClip 
 	{
@@ -28,14 +28,16 @@
 			_xmlUrl = schema_xml;
 			_directory = directory;
 			
-			StructureCreator.instance.addInfoText("Start Creation");
+			//StructureCreator.instance.addInfoText("Start Creation");
+			CaptainsLog.getInstance().addToLog("Start Creation");
 			
 			loadXML();
 		}
 		
 		private function loadXML():void
 		{
-			StructureCreator.instance.addInfoText("load the xml " + _xmlUrl);
+			//StructureCreator.instance.addInfoText("load the xml " + _xmlUrl);
+			CaptainsLog.getInstance().addToLog("load the xml " + _xmlUrl);
 			_xmlLoader = new URLLoader();
 			_xmlLoader.addEventListener(Event.COMPLETE, hComplete);
 			_xmlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, secError);
@@ -45,43 +47,49 @@
 		
 		private function secError(e:SecurityErrorEvent):void 
 		{
-			StructureCreator.instance.addInfoText("security error: " + e);
+			//StructureCreator.instance.addInfoText("security error: " + e);
+			CaptainsLog.getInstance().addToLog("security error: " + e);
 		}
 		
 		private function hComplete(e:Event):void 
 		{
-			StructureCreator.instance.addInfoText('load xml complete');
+			//StructureCreator.instance.addInfoText('load xml complete');
+			CaptainsLog.getInstance().addToLog('load xml complete');
 			_xmlLoader.removeEventListener(Event.COMPLETE, hComplete);
 			_xmlLoader.removeEventListener(IOErrorEvent.IO_ERROR, hError);
 			
 			var xml:XML = new XML(e.currentTarget.data);
-			trace(xml.folder.length());
-			StructureCreator.instance.addInfoText(xml.folder.length());
+			//trace(xml.folder.length());
+			//StructureCreator.instance.addInfoText(xml.folder.length());
+			CaptainsLog.getInstance().addToLog(xml.folder.length());
 			createStructure(xml);
 		}
 		
 		private function createStructure(xml:XML, path:String = '/'):void
 		{
 			var currPath:String = path;
-			StructureCreator.instance.addInfoText(currPath);
+			//StructureCreator.instance.addInfoText(currPath);
+			CaptainsLog.getInstance().addToLog(currPath);
 			var file:File;
 			var url:String;
-			var quality:String;
+			//var quality:String;
 			for (var j:int = 0; j < xml.file.length(); j++) 
 			{
 				trace("create file: " + xml.file[j].@name);
-				StructureCreator.instance.addInfoText("create file: " + xml.file[j].@name);
+				//StructureCreator.instance.addInfoText("create file: " + xml.file[j].@name);
+				CaptainsLog.getInstance().addToLog("create file: " + xml.file[j].@name);
 				url = xml.file[j].@url;
-				quality = xml.file[j].@quality;
-				quality = quality == '' ? '80' : quality;
+				//quality = xml.file[j].@quality;
+				//quality = quality == '' ? '80' : quality;
 				
-				new FileCreate(_directory + currPath, xml.file[j].@name, url, xml.file[j].text(), uint(quality));
+				new FileCreate(_directory + currPath, xml.file[j].@name, url, xml.file[j].text()/*, uint(quality)*/);
 			}
 			var dir:File;
 			for (var i:int = 0; i < xml.folder.length(); ++i)
 			{
 				trace("create folder : " + xml.folder[i].@name);
-				StructureCreator.instance.addInfoText("create folder : " + xml.folder[i].@name);
+				//StructureCreator.instance.addInfoText("create folder : " + xml.folder[i].@name);
+				CaptainsLog.getInstance().addToLog("create folder : " + xml.folder[i].@name);
 				dir = new File();
 				dir.url = _directory + currPath;
 				dir = dir.resolvePath(xml.folder[i].@name);
@@ -97,7 +105,8 @@
 		
 		private function hError(e:IOErrorEvent):void 
 		{
-			StructureCreator.instance.addInfoText("load xml error: " + e + "\n");
+			//StructureCreator.instance.addInfoText("load xml error: " + e + "\n");
+			CaptainsLog.getInstance().addToLog("load xml error: " + e + "\n");
 			trace("Error: " + e);
 		}
 		
