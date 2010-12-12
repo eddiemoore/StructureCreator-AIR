@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <application xmlns="http://ns.adobe.com/air/application/1.5">
 
-  <id>com.structurecreator.StructureCreator</id>
+  <id>com.structurecreator.StructureCreatorAir</id>
 
   <version>0.1</version>
 
   <filename>StructureCreator</filename>
 
   <description/>
+
+  
+
+
 
   
 
@@ -33,6 +37,10 @@
 
   
 
+
+
+  
+
 <!-- To localize the name, use the following format for the name element.<name><text xml:lang="en">English App name goes here</text><text xml:lang="fr">French App name goes here</text><text xml:lang="ja">Japanese App name goes here</text></name>-->
 
   <copyright/>
@@ -42,6 +50,9 @@
     <systemChrome>standard</systemChrome>
     <transparent>false</transparent>
     <visible>true</visible>
+    <maximizable>true</maximizable>
+    <minimizable>true</minimizable>
+    <resizable>true</resizable>
   </initialWindow>
 
   <icon/>
@@ -49,6 +60,8 @@
   <customUpdateUI>false</customUpdateUI>
 
   <allowBrowserInvocation>false</allowBrowserInvocation>
+
+
 
 
 

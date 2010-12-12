@@ -22,6 +22,8 @@
 		private static var _xmlUrl:String = '';
 		private static var _directory:String = '';
 		private var _xmlLoader:URLLoader;
+		private var _totalFiles:int;
+		private var _filesCreated:int;
 		
 		public function XMLTransverse(schema_xml:String, directory:String) 
 		{
@@ -53,42 +55,38 @@
 		
 		private function hComplete(e:Event):void 
 		{
-			//StructureCreator.instance.addInfoText('load xml complete');
 			CaptainsLog.getInstance().addToLog('load xml complete');
 			_xmlLoader.removeEventListener(Event.COMPLETE, hComplete);
 			_xmlLoader.removeEventListener(IOErrorEvent.IO_ERROR, hError);
 			
 			var xml:XML = new XML(e.currentTarget.data);
-			//trace(xml.folder.length());
-			//StructureCreator.instance.addInfoText(xml.folder.length());
+			
 			CaptainsLog.getInstance().addToLog(xml.folder.length());
+			_totalFiles = xml.descendants('file').length();
+			_filesCreated = 0;
+			
 			createStructure(xml);
 		}
 		
 		private function createStructure(xml:XML, path:String = '/'):void
 		{
 			var currPath:String = path;
-			//StructureCreator.instance.addInfoText(currPath);
+			
 			CaptainsLog.getInstance().addToLog(currPath);
 			var file:File;
 			var url:String;
-			//var quality:String;
+			
 			for (var j:int = 0; j < xml.file.length(); j++) 
 			{
-				trace("create file: " + xml.file[j].@name);
-				//StructureCreator.instance.addInfoText("create file: " + xml.file[j].@name);
 				CaptainsLog.getInstance().addToLog("create file: " + xml.file[j].@name);
 				url = xml.file[j].@url;
-				//quality = xml.file[j].@quality;
-				//quality = quality == '' ? '80' : quality;
 				
-				new FileCreate(_directory + currPath, xml.file[j].@name, url, xml.file[j].text()/*, uint(quality)*/);
+				new FileCreate(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
+				_filesCreated += 1;
 			}
 			var dir:File;
 			for (var i:int = 0; i < xml.folder.length(); ++i)
 			{
-				trace("create folder : " + xml.folder[i].@name);
-				//StructureCreator.instance.addInfoText("create folder : " + xml.folder[i].@name);
 				CaptainsLog.getInstance().addToLog("create folder : " + xml.folder[i].@name);
 				dir = new File();
 				dir.url = _directory + currPath;
@@ -100,12 +98,16 @@
 					createStructure(xml.folder[i] as XML, currPath + xml.folder[i].@name + '/');
 				}
 			}
-			
+			_filesCreated >= _totalFiles ? writeLogFile() : '';
+		}
+		
+		private function writeLogFile():void
+		{
+			CaptainsLog.getInstance().writeToFile();
 		}
 		
 		private function hError(e:IOErrorEvent):void 
 		{
-			//StructureCreator.instance.addInfoText("load xml error: " + e + "\n");
 			CaptainsLog.getInstance().addToLog("load xml error: " + e + "\n");
 			trace("Error: " + e);
 		}
