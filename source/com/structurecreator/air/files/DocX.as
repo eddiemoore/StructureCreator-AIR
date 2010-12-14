@@ -46,7 +46,7 @@ package com.structurecreator.air.files
 					{
 						//text file
 						fileContent = _docx.getInput(zipEntry).toString();
-						//fileContent = CustomVars.getInstance().addVariables(fileContent);
+						fileContent = CustomVars.getInstance().addVariables(fileContent);
 						
 						//var fileName:String = zipEntry.name;
 						fileData = new ByteArray();
