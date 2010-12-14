@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <folder>
-	<folder name='release'>
+	<!--<folder name='release'>
 		<folder name='css'>
 			<file name='style.css'><![CDATA[*{ margin:0; padding:0 }]]></file>
 		</folder>
@@ -16,5 +16,6 @@
 	<p>%MY_PARA%</p>
 </body>
 </html>]]></file>
-	</folder>
+	</folder>-->
+	<file name='docfile.docx' url='D:\Structure Creator\StructureCreator-AIR\release\docfile.docx' />
 </folder>

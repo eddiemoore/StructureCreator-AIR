@@ -1,4 +1,4 @@
-package com.asfug 
+package com.structurecreator.air
 {
 	import flash.events.Event;
 	import flash.net.URLRequest;

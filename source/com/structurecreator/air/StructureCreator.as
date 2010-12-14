@@ -1,4 +1,4 @@
-﻿package com.asfug 
+﻿package com.structurecreator.air
 {
 	import flash.display.*;
 	import flash.net.FileFilter;
@@ -8,7 +8,7 @@
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.events.Event;
-	import com.asfug.XMLTransverse;
+	//import com.asfug.XMLTransverse;
 	
 	/**
 	 * ...

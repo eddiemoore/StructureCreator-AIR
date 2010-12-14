@@ -1,4 +1,4 @@
-﻿package com.asfug
+﻿package com.structurecreator.air
 {
 	/**
 	 * ...
@@ -14,8 +14,6 @@
 	import flash.filesystem.FileStream;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	//import flash.text.TextField;
-	//import fl.controls.TextArea;
 	
 	public class XMLTransverse extends MovieClip 
 	{
@@ -30,7 +28,6 @@
 			_xmlUrl = schema_xml;
 			_directory = directory;
 			
-			//StructureCreator.instance.addInfoText("Start Creation");
 			CaptainsLog.getInstance().addToLog("Start Creation");
 			
 			loadXML();
@@ -73,6 +70,8 @@
 			var currPath:String = path;
 			
 			CaptainsLog.getInstance().addToLog(currPath);
+			
+			//FILES
 			var file:File;
 			var url:String;
 			
@@ -84,6 +83,7 @@
 				new FileCreate(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
 				_filesCreated += 1;
 			}
+			//FOLDERS
 			var dir:File;
 			for (var i:int = 0; i < xml.folder.length(); ++i)
 			{

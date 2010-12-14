@@ -1,4 +1,4 @@
-package com.asfug 
+package com.structurecreator.air
 {
 	import flash.text.TextField;
 	import flash.text.TextFieldType;

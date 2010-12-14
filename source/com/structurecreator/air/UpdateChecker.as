@@ -1,4 +1,4 @@
-﻿package com.asfug 
+﻿package com.structurecreator.air
 {
 	import flash.events.ErrorEvent;
 	import air.update.ApplicationUpdaterUI;
