@@ -13,7 +13,7 @@ package com.structurecreator.air
 													'mdx', 'm', 'mesh', 'mm3d', 'nif', 'obj', 'off', 'skp', 'smd', 'u3d', 'wings', 'x', 'x3d', 'z3d',
 													'mp3', 'wav', 'ogg', 'wma', 'aif', 'aiff', /*'mid',*/ //AUDIO FILES
 													'avi', 'mov', 'flv', 'm4v', 'mkv', 'mpeg', 'mpg', 'mpe', 'mp4', 'rm', 'svi', 'smi', 'swf', 'wmv', //VIDEO FILES
-													'xls', 'doc', 'docx', 'key', 'odp', 'otp', 'pps', 'ppt', 'pptx', 'sdd', 'sti', 'sxi', 'pdf', //OFFICE FILES
+													'xls', 'xlsx', 'doc', 'docx', 'key', 'odp', 'otp', 'pps', 'ppt', 'pptx', 'sdd', 'sti', 'sxi', 'pdf', //OFFICE FILES
 													'mpp', //Project Managenent
 													'fla', //ADOBE FILES
 													/*'ttf',*/ 'otf', //FONTS

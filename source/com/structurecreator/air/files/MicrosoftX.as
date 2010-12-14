@@ -11,13 +11,13 @@ package com.structurecreator.air.files
 	 * ...
 	 * @author Ed Moore
 	 */
-	public class DocX
+	public class MicrosoftX
 	{
 		private var _outputFile:File;
 		private var _docx:ZipFile;
 		private var _bytes:ByteArray;
 		
-		public function DocX(file:File, bytes:ByteArray) 
+		public function MicrosoftX(file:File, bytes:ByteArray) 
 		{
 			_outputFile = file;
 			_bytes = bytes;
