@@ -1,5 +1,6 @@
 package com.structurecreator.air
 {
+	import com.structurecreator.air.files.MicrosoftX;
 	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
@@ -46,6 +47,7 @@ package com.structurecreator.air
 			var entry:FileStream;
 			var zipEntry:ZipEntry;
 			var fileContent:String;
+			var fileext:String = '';
 			
 			for(var i:uint = 0; i < _zipFile.entries.length; i++)  
 			{  
@@ -59,10 +61,23 @@ package com.structurecreator.air
 					entryFile = _directory.resolvePath(zipEntry.name);  
 					entry = new FileStream();  
 					entry.open(entryFile, FileMode.WRITE);
-					//trace(zipEntry.name.substr(zipEntry.name.lastIndexOf('.') + 1));
-					if (FileTypes.nonTextExtArray.indexOf(zipEntry.name.substr(zipEntry.name.lastIndexOf('.') + 1)) > -1)
+					
+					fileext = zipEntry.name.substr(zipEntry.name.lastIndexOf('.') + 1);
+					
+					if (FileTypes.nonTextExtArray.indexOf(fileext) > -1)
 					{
-						entry.writeBytes(_zipFile.getInput(zipEntry));
+						switch (fileext) 
+						{
+							case 'docx':
+							case 'pptx':
+							case 'xlsx':
+								entry.close();
+								new MicrosoftX(entryFile, _zipFile.getInput(zipEntry));
+							break;
+							default:
+								entry.writeBytes(_zipFile.getInput(zipEntry));
+							break;
+						}
 					}
 					else
 					{
@@ -70,7 +85,6 @@ package com.structurecreator.air
 						fileContent = CustomVars.getInstance().addVariables(fileContent);
 						entry.writeUTFBytes(fileContent);
 					}
-					
 					
 					entry.close();
 				}
