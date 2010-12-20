@@ -23,8 +23,10 @@
 		
 		public function StructureCreator() 
 		{
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
 			version_txt.text = 'StructureCreator v' + _VERSION;
-			
+						
 			CaptainsLog.getInstance().initLogField(getChildByName('info_txt') as TextArea);
 			
 			create_btn.addEventListener(MouseEvent.CLICK, createFolderStructure);
