@@ -24,7 +24,7 @@ package com.structurecreator.air
 			date = new Date();
 			_log += date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ';
 			_log += (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' + (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()) + ' : ';
-			_log += text + "\n";
+			_log += text + "\r\n";
 			updateLogField();
 		}
 		
@@ -48,11 +48,12 @@ package com.structurecreator.air
 		public function writeToFile():void 
 		{
 			trace("WRITE TO FILE");
-			var logFile:File = File.applicationStorageDirectory;
-			logFile = logFile.resolvePath("CaptainsLog.txt");
+			//var logFile:File = File.applicationStorageDirectory;
+			var logFile:File = File.desktopDirectory;
+			logFile = logFile.resolvePath("logs/CaptainsLog.txt");
 			
 			var fs:FileStream = new FileStream();
-			fs.open(logFile, FileMode.WRITE);
+			fs.open(logFile, FileMode.UPDATE);
 			
 			fs.writeUTFBytes(_log);
 			fs.close();

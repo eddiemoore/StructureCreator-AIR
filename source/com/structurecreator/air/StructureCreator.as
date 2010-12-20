@@ -25,6 +25,7 @@
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			
 			version_txt.text = 'StructureCreator v' + _VERSION;
 						
 			CaptainsLog.getInstance().initLogField(getChildByName('info_txt') as TextArea);
@@ -78,6 +79,9 @@
 		{
 			project_title = projectname_txt.text;
 			
+			CaptainsLog.getInstance().addToLog('**************************************************');
+			CaptainsLog.getInstance().addToLog('NEW PROJECT STARTED');
+			CaptainsLog.getInstance().addToLog('**************************************************');
 			CaptainsLog.getInstance().addToLog(directory.url);
 			CaptainsLog.getInstance().addToLog(schema_file.url);
 			
