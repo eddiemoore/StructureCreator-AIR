@@ -80,7 +80,7 @@
 				CaptainsLog.getInstance().addToLog("create file: " + xml.file[j].@name);
 				url = xml.file[j].@url;
 				
-				new FileCreate(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
+				new FileCreate(_directory + currPath, CustomVars.getInstance().addVariables(xml.file[j].@name), url, xml.file[j].text());
 				_filesCreated += 1;
 			}
 			//FOLDERS
@@ -90,12 +90,12 @@
 				CaptainsLog.getInstance().addToLog("create folder : " + xml.folder[i].@name);
 				dir = new File();
 				dir.url = _directory + currPath;
-				dir = dir.resolvePath(xml.folder[i].@name);
+				dir = dir.resolvePath(CustomVars.getInstance().addVariables(xml.folder[i].@name));
 				dir.createDirectory();
 				
 				if (xml.folder[i].folder.length() > 0 || xml.folder[i].file.length() > 0)
 				{
-					createStructure(xml.folder[i] as XML, currPath + xml.folder[i].@name + '/');
+					createStructure(xml.folder[i] as XML, currPath + CustomVars.getInstance().addVariables(xml.folder[i].@name) + '/');
 				}
 			}
 			_filesCreated >= _totalFiles ? writeLogFile() : '';
