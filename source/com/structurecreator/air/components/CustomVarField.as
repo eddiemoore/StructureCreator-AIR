@@ -2,8 +2,7 @@ package com.structurecreator.air.components
 {
 	import com.asfug.components.Checkbox;
 	import com.structurecreator.air.events.CustomVarEvent;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
+	import flash.display.*;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	/**
@@ -28,6 +27,7 @@ package com.structurecreator.air.components
 		private function removeClicked(e:MouseEvent):void 
 		{
 			dispatchEvent(new CustomVarEvent(CustomVarEvent.REMOVE));
+			//openWindow();
 		}
 		
 		public function getVariable():String
@@ -54,6 +54,15 @@ package com.structurecreator.air.components
 		public function setValue(value:String = ''):void
 		{
 			value_txt.text = value;
+		}
+		
+		private function openWindow():void
+		{
+			var windowOptions:NativeWindowInitOptions = new NativeWindowInitOptions();
+			windowOptions.systemChrome = NativeWindowSystemChrome.STANDARD;
+			windowOptions.type = NativeWindowType.NORMAL;
+			var newWindow:NativeWindow = new NativeWindow( windowOptions );
+			newWindow.activate();
 		}
 		
 	}
