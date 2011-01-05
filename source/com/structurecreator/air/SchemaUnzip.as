@@ -48,6 +48,7 @@ package com.structurecreator.air
 			var zipEntry:ZipEntry;
 			var fileContent:String;
 			var fileext:String = '';
+			var name:String;
 			
 			for(var i:uint = 0; i < _zipFile.entries.length; i++)  
 			{  
@@ -58,11 +59,12 @@ package com.structurecreator.air
 				{  
 					//var targetDir:File = e.target as File;  
 					entryFile = new File();
-					entryFile = _directory.resolvePath(zipEntry.name);  
-					entry = new FileStream();  
+					name = CustomVars.getInstance().addVariables(zipEntry.name)
+					entryFile = _directory.resolvePath(name);  
+					entry = new FileStream();
 					entry.open(entryFile, FileMode.WRITE);
 					
-					fileext = zipEntry.name.substr(zipEntry.name.lastIndexOf('.') + 1);
+					fileext = name.substr(zipEntry.name.lastIndexOf('.') + 1);
 					
 					if (FileTypes.nonTextExtArray.indexOf(fileext) > -1)
 					{

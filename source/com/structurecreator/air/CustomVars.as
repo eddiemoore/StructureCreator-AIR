@@ -26,16 +26,6 @@ package com.structurecreator.air
 		
 		public function addVariables(fileContent:String = ''):String
 		{
-			//TODO: Custom Variables
-			/*var vars:Array = [{name:'TITLE', data:'MY PROJECT'}, 
-							{name:'TEST', data:'This is the title'},
-							{name:'MY_PARA', data:'this is the paragraph'}];
-			var reg:RegExp;
-			for (var i:int = 0; i < vars.length; i++)
-			{
-				reg = new RegExp("%" + vars[i].name + "%", "g");
-				fileContent = _file_content.replace(reg, vars[i].data);
-			}*/
 			var reg:RegExp;
 			for (var i:int = 0; i < CustomVarsHolder.customVars.length; i++) 
 			{
