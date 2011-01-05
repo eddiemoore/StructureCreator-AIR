@@ -26,7 +26,7 @@ The handy little AIR app will help you create your own schema file from a folder
 		</folder>
 		<folder name='images' />
 		<folder name='js'>
-			<file name='scripts.js' url='http://code.jquery.com/jquery-1.4.4.min.js' />
+			<file name='jquery.js' url='http://code.jquery.com/jquery-1.4.4.min.js' />
 		</folder>
 		<folder name='xml' />
 		<file name='index.html' url="http://example.com/templates/index.html" />

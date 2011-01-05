@@ -1,5 +1,6 @@
 package com.structurecreator.air.components 
 {
+	import com.structurecreator.air.events.CustomVarEvent;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	/**
@@ -33,13 +34,29 @@ package com.structurecreator.air.components
 		public function addNewCustomVar(variable:String = '', value:String = ''):void 
 		{
 			removeChild(add_mc);
+			
 			var cust:CustomVarField = new CustomVarField();
 			cust.setVariable(variable);
 			cust.setValue(value);
 			
+			cust.addEventListener(CustomVarEvent.REMOVE, removeCustVar);
+			
 			cust.y = this.height + 5;
 			customVars.push(cust);
 			addChild(cust);
+			
+			add_mc.y = this.height + 5;
+			addChild(add_mc);
+		}
+		
+		private function removeCustVar(e:CustomVarEvent):void 
+		{
+			removeChild(add_mc);
+			
+			var cust:CustomVarField = e.currentTarget as CustomVarField;
+			customVars.splice(customVars.indexOf(cust), 1);
+			cust.removeEventListener(CustomVarEvent.REMOVE, removeCustVar);
+			removeChild(cust);
 			
 			add_mc.y = this.height + 5;
 			addChild(add_mc);

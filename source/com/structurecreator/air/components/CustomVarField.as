@@ -1,7 +1,10 @@
 package com.structurecreator.air.components 
 {
 	import com.asfug.components.Checkbox;
+	import com.structurecreator.air.events.CustomVarEvent;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	/**
 	 * ...
@@ -16,6 +19,15 @@ package com.structurecreator.air.components
 			variable_txt.restrict = 'a-zA-Z0-9_\-';
 			
 			_remeber = new Checkbox(remember_mc);
+			
+			var remove:MovieClip = getChildByName('delete_mc') as MovieClip;
+			remove.buttonMode = true;
+			remove.addEventListener(MouseEvent.CLICK, removeClicked, false, 0, true);
+		}
+		
+		private function removeClicked(e:MouseEvent):void 
+		{
+			dispatchEvent(new CustomVarEvent(CustomVarEvent.REMOVE));
 		}
 		
 		public function getVariable():String

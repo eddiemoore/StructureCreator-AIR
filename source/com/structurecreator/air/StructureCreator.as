@@ -28,7 +28,7 @@
 			
 			version_txt.text = 'StructureCreator v' + _VERSION;
 						
-			CaptainsLog.getInstance().initLogField(getChildByName('info_txt') as TextArea);
+			//CaptainsLog.getInstance().initLogField(getChildByName('info_txt') as TextArea);
 			
 			create_btn.addEventListener(MouseEvent.CLICK, createFolderStructure);
 			browse_btn.addEventListener(MouseEvent.CLICK, browseForFolder);
