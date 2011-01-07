@@ -1,5 +1,7 @@
 ﻿package com.structurecreator.air
 {
+	import com.structurecreator.air.components.CustomVarsHolder;
+	import com.structurecreator.air.db.Database;
 	import flash.display.*;
 	import flash.net.FileFilter;
 	import flash.text.*;
@@ -18,7 +20,7 @@
 	{
 		var directory:File = File.documentsDirectory;
 		var schema_file:File = new File();
-		private static const _VERSION:String = '0.1';
+		private static const _VERSION:String = '0.2';
 		public static var project_title:String;
 		
 		public function StructureCreator() 
@@ -35,6 +37,38 @@
 			schema_btn.addEventListener(MouseEvent.CLICK, selectSchema);
 			
 			new UpdateChecker();
+			
+			setupDatabase();
+		}
+		
+		private function setupDatabase():void 
+		{
+			Database.getInstance().createDB();
+			Database.getInstance().addProfile('Default');
+			var result:Array = Database.getInstance().selectAllProfiles();
+			
+			for (var i:int = 0; i < result.length; i++) 
+			{
+				if (result[i].isDefault == 1)
+					Database.getInstance().currentProfileId = int(result[i].profile_id);
+			}
+			
+			// Get saved schema file
+			result = Database.getInstance().selectProfile(Database.getInstance().currentProfileId);
+			schema_file.url = result[0].schema_file == null ? '' : result[0].schema_file
+			schema_txt.text = result[0].schema_file == null ? '' : result[0].schema_file;
+			
+			// Get custom vars for profile
+			result = Database.getInstance().selectAllCustomVars(Database.getInstance().currentProfileId);
+			if (result != null && result.length > 0)
+			{
+				var customVarsHolder:CustomVarsHolder = getChildByName('customVarsHolder_mc') as CustomVarsHolder;
+				customVarsHolder.removeAll();
+				for (var j:int = 0; j < result.length; j++) 
+				{
+					customVarsHolder.addNewCustomVar(result[j].variable, result[j].value);
+				}
+			}
 		}
 
 		private function browseForFolder(e:MouseEvent):void
@@ -84,6 +118,12 @@
 			CaptainsLog.getInstance().addToLog('**************************************************');
 			CaptainsLog.getInstance().addToLog(directory.url);
 			CaptainsLog.getInstance().addToLog(schema_file.url);
+			
+			//trace(Database.getInstance().currentProfileId, schema_file.url);
+			Database.getInstance().updateProfile(Database.getInstance().currentProfileId, schema_file.url);
+			
+			Database.getInstance().addCustomVars(CustomVarsHolder.customVars, Database.getInstance().currentProfileId);
+			
 			
 			var schemaFileType:String = schema_file.nativePath.substr(schema_file.nativePath.lastIndexOf('.') + 1);
 			

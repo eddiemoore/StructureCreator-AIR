@@ -1,6 +1,8 @@
 package com.structurecreator.air
 {
+	import com.structurecreator.air.components.CustomVarField;
 	import com.structurecreator.air.components.CustomVarsHolder;
+	import com.structurecreator.air.db.Database;
 	/**
 	 * ...
 	 * @author Ed Moore
@@ -8,7 +10,6 @@ package com.structurecreator.air
 	public class CustomVars 
 	{
 		private static var _instance:CustomVars = null;
-		public var customVars:Vector.<Object> = new Vector.<Object>();
 		
 		public function CustomVars(e:Singleton) {}
 		
@@ -19,18 +20,15 @@ package com.structurecreator.air
             return _instance;
         }
 		
-		public function addCustomVars(variable:String, value:String):void
-		{
-			customVars.push( { name:variable, value:value } );
-		}
-		
 		public function addVariables(fileContent:String = ''):String
 		{
 			var reg:RegExp;
+			var field:CustomVarField;
 			for (var i:int = 0; i < CustomVarsHolder.customVars.length; i++) 
 			{
-				reg = new RegExp("%" + CustomVarsHolder.customVars[i].getVariable() + "%", "g");
-				fileContent = fileContent.replace(reg, CustomVarsHolder.customVars[i].getValue());
+				field = CustomVarsHolder.customVars[i] as CustomVarField;
+				reg = new RegExp("%" + field.getVariable() + "%", "g");
+				fileContent = fileContent.replace(reg, field.getValue());
 			}
 			fileContent = fileContent.replace(/%PROJECT_TITLE%/g, StructureCreator.project_title);
 			return fileContent;
