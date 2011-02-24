@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" height="43">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:layout>
+		<s:HorizontalLayout />
+	</s:layout>
+	
+	<s:Label text="%" lineHeight="20" fontSize="25" />
+	<s:TextInput id="variable" width="100%" />
+	
+	<s:Label text="%" lineHeight="20" fontSize="25" />
+	<mx:VRule height="22"/>
+	<s:TextInput id="value" width="100%" />
+	
+	<s:CheckBox id="remember" />
+	<s:Button id="delete" label="X"  width="30"/>
+</s:Application>

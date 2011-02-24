@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="390" backgroundColor="#2B2B2B">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script source="Main.as" />
+	
+	<s:layout>
+		<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" />
+	</s:layout>
+	
+	<s:Label text="Project Name" fontSize="15" />
+	<s:TextInput id="projectName" width="100%" />
+	
+	<!-- Project Folder -->
+	<s:Label text="Select Project Folder" fontSize="15" left="0" />
+	<s:Group width="100%">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="bottom" />
+		</s:layout>
+		<s:TextInput id="projectFolderField" width="100%" />
+		<s:Button label="..." click="selectFolder_clickHandler(event)" id="selectFolder" right="0" />
+	</s:Group>
+	<!-- End Project Folder -->
+	
+	<!-- Schema Select -->
+	<s:Label text="Select Schema" fontSize="15" />
+	<s:Group width="100%">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="bottom" />
+		</s:layout>
+		<s:TextInput id="schemaField" width="100%" />
+		<s:Button label="..." id="selectSchema" click="selectSchema_clickHandler(event)" />
+	</s:Group>
+	<!-- End Schema Select -->
+	
+	<!-- Custom Vars Go Here -->
+	<s:Scroller width="100%" height="137" id="customVarsPane" />
+	<!-- End Custom Vars -->
+	
+	<s:Button label="Create Project" id="createBtn" click="createBtn_clickHandler(event)"  height="40" width="100%"/>
+	
+</s:WindowedApplication>
