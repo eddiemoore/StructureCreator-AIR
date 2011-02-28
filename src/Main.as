@@ -6,15 +6,33 @@ import flash.filesystem.File;
 import flash.net.FileFilter;
 
 import mx.collections.ArrayCollection;
+import mx.events.CollectionEvent;
+import mx.events.FlexEvent;
 
 private var directory:File = File.documentsDirectory;
 private var schemaFile:File = new File();
 
+
 new UpdateChecker();
-		
+
+
+protected function setup(event:FlexEvent):void
+{
+	// TODO Auto-generated method stub
+	CustomVars.getInstance().ac = new ArrayCollection();
+}
+
 /**
  * Button Click Events
  */
+protected function addButton_clickHandler(event:MouseEvent):void
+{
+	// TODO Auto-generated method stub
+	//
+	CustomVars.getInstance().ac.addItem({id:CustomVars.getInstance().ac.length, variable:'', value:''});
+}
+
+
 protected function selectFolder_clickHandler(event:MouseEvent):void
 {
 	trace("Select Folder");

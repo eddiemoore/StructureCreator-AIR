@@ -3,6 +3,7 @@ package com.structurecreator
 	//import com.structurecreator.air.components.CustomVarField;
 	//import com.structurecreator.air.components.CustomVarsHolder;
 	//import com.structurecreator.air.db.Database;
+	import mx.collections.ArrayCollection;
 	/**
 	 * ...
 	 * @author Ed Moore
@@ -10,6 +11,9 @@ package com.structurecreator
 	public class CustomVars 
 	{
 		private static var _instance:CustomVars = null;
+		
+		[Bindable]
+		public var ac:ArrayCollection;
 		
 		public function CustomVars(e:Singleton) {}
 		

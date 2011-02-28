@@ -14,9 +14,6 @@
   </compiler>
   <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/samples/themes/spark_graphite"/>
   <applications>
-    <application path="CustomVariableBar.mxml">
-      <airExcludes/>
-    </application>
     <application path="Main.mxml">
       <airExcludes/>
     </application>

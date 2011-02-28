@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
-					   xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="390" backgroundColor="#2B2B2B">
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
+					   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="414" backgroundColor="#2B2B2B" creationComplete="setup(event)">
 	
 	<fx:Script source="Main.as" />
 	
@@ -38,7 +35,20 @@
 	<!-- End Schema Select -->
 	
 	<!-- Custom Vars Go Here -->
-	<s:Scroller width="100%" height="137" id="customVarsPane" />
+	<mx:HRule width="100%"/>
+	
+	<s:Group width="100%">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="middle" />
+		</s:layout>
+		<s:Label text="Custom Vars" width="100%"/>
+		<s:Button label="Add +" id="addButton" click="addButton_clickHandler(event)" lineThrough="false" chromeColor="#11913B"/>
+	</s:Group>
+	<s:List id="custVarList" itemRenderer="CustVarBar" dataProvider="{CustomVars.getInstance().ac}" width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingTop="10"/>
+		</s:layout>
+	</s:List>
 	<!-- End Custom Vars -->
 	
 	<s:Button label="Create Project" id="createBtn" click="createBtn_clickHandler(event)"  height="40" width="100%"/>
