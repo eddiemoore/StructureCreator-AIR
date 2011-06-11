@@ -30,7 +30,7 @@ package com.structurecreator.air
 				reg = new RegExp("%" + field.getVariable() + "%", "g");
 				fileContent = fileContent.replace(reg, field.getValue());
 			}
-			fileContent = fileContent.replace(/%PROJECT_TITLE%/g, StructureCreator.project_title);
+			fileContent = fileContent.replace(/%PROJECT_TITLE%/g, Main.project_title);
 			return fileContent;
 		}
 		
