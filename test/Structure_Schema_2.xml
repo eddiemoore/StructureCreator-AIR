@@ -11,7 +11,7 @@
 		<folder name='xml'>
 			<file name='config.xml' url="http://structurecreator.com/templates/config.xml" />
 		</folder>
-		<file name='index.html' url="http://structurecreator.com/templates/1_2/index.html" />
+		<file name='index.html'><![CDATA[this is a test to see the %TEST% works]]></file>
 	</folder>
 	<folder name='source'>
 		<folder name='com'>
@@ -22,6 +22,5 @@
 				</folder>
 			</folder>
 		</folder>
-		<!--<file name='main.fla' exportpath="../release/" classpath="" />-->
 	</folder>
 </folder>

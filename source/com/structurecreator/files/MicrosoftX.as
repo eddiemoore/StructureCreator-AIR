@@ -1,6 +1,7 @@
 package com.structurecreator.files 
 {
 	//import com.structurecreator.air.CustomVars;
+	import com.structurecreator.customvars.CustomVariables;
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.files.FileTypes;
 	import flash.events.EventDispatcher;
@@ -48,8 +49,7 @@ package com.structurecreator.files
 					{
 						//text file
 						fileContent = _docx.getInput(zipEntry).toString();
-						//fileContent = CustomVars.getInstance().addVariables(fileContent);
-						
+						fileContent = CustomVariables.getInstance().updateVars(fileContent);						
 						
 						fileData = new ByteArray();
 						fileData.writeUTFBytes(fileContent);
@@ -81,6 +81,10 @@ package com.structurecreator.files
 		
 		private function complete():void 
 		{
+			_outputFile = null;
+			_bytes = null;
+			_docx = null;
+			
 			dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));
 		}
 		

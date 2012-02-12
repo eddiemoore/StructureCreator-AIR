@@ -8,9 +8,9 @@
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="10" />
-    <movie minorVersion="2" />
-    <movie platform="Flash Player" />
+    <movie version="2" />
+    <movie minorVersion="7" />
+    <movie platform="AIR" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -46,7 +46,7 @@
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>
-    <!-- example: <element path="..." /> -->
+    <element path="C:\Program Files (x86)\Adobe\Adobe Flash CS5.5\AIR2.6\frameworks\libs\air\airglobal.swc" />
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
@@ -83,7 +83,7 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="Default" />
+    <option testMovie="Unknown" />
   </options>
   <!-- Plugin storage -->
   <storage />

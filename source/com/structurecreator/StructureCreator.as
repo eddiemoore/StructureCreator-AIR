@@ -1,10 +1,15 @@
 package com.structurecreator 
 {
+	import com.structurecreator.customvars.CustomVariables;
 	import com.structurecreator.customvars.CustomVarsHolder;
+	import com.structurecreator.db.Database;
+	import com.structurecreator.events.DatabaseEvent;
 	import com.structurecreator.schemas.XMLSchema;
 	import fl.containers.ScrollPane;
 	import fl.controls.CheckBox;
+	import fl.controls.ComboBox;
 	import fl.controls.TextInput;
+	import fl.data.DataProvider;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -24,6 +29,7 @@ package com.structurecreator
 	public class StructureCreator extends Sprite 
 	{
 		private var _cvh:CustomVarsHolder;
+		private var _db:Database;
 		internal var directory:File = File.documentsDirectory;
 		internal var schema_file:File = new File();
 		
@@ -44,6 +50,7 @@ package com.structurecreator
 			project_folder_btn.addEventListener(MouseEvent.CLICK, handleClicks);
 			schema_btn.addEventListener(MouseEvent.CLICK, handleClicks);
 			create_btn.addEventListener(MouseEvent.CLICK, handleClicks);
+			save_profile_btn.addEventListener(MouseEvent.CLICK, handleClicks);
 			
 			var tf:TextFormat = new TextFormat();
 			tf.color = 0xffffff;
@@ -61,6 +68,47 @@ package com.structurecreator
 			//mc.addChild(_cvh);
 			
 			add_btn.addEventListener(MouseEvent.CLICK, handleClicks);
+			
+			initDB();
+		}
+		
+		private function initDB():void 
+		{
+			trace("Create DB");
+			_db = new Database();
+			_db.addEventListener(DatabaseEvent.DB_CREATED, onDatabaseCreated);
+			_db.addEventListener(DatabaseEvent.PROFILE_ADDED, onProfileAdded);
+			_db.addEventListener(DatabaseEvent.GOT_PROFILES, onGotProfiles);
+			//_db.addProfile();
+			_db.init();
+		}
+		
+		private function onDatabaseCreated(e:DatabaseEvent):void 
+		{
+			//trace("Add Profile");
+			//_db.addProfile("Flash Project");
+			_db.getProfiles();
+		}
+		
+		private function onGotProfiles(e:DatabaseEvent):void 
+		{
+			//TODO update profiles combo
+			if (e.result.length > 0)
+			{
+				var v:Array = [{'label':'', 'data':''}];
+				for (var i:int = 0; i < e.result.length; i++) 
+				{
+					//trace(e.result[i].name, e.result[i].profile_id);
+					v.push( {'label':e.result[i].name, 'value':e.result[i].profile_id} );
+				}
+				(project_profile_cb as ComboBox).dataProvider = new DataProvider(v);
+				(project_profile_cb as ComboBox).enabled = true;
+			}
+		}
+		
+		private function onProfileAdded(e:DatabaseEvent):void 
+		{
+			_db.getProfiles();
 		}
 		
 		private function handleClicks(e:MouseEvent):void 
@@ -98,6 +146,9 @@ package com.structurecreator
 					//(custom_vars_scroll as ScrollPane).update();
 					(custom_vars_scroll as ScrollPane).refreshPane();
 					custom_vars_scroll.verticalScrollPosition = custom_vars_scroll.maxVerticalScrollPosition;
+					break;
+				case 'save_profile_btn' :
+					
 					break;
 				case 'create_btn' :
 					createProjectStructure();
@@ -162,6 +213,7 @@ package com.structurecreator
 		private function createProjectStructure():void
 		{
 			var schemaFileType:String = schema_file.nativePath.substr(schema_file.nativePath.lastIndexOf('.') + 1);
+			CustomVariables.getInstance().variables = _cvh.getFullData();
 			
 			switch (schemaFileType.toLowerCase())
 			{

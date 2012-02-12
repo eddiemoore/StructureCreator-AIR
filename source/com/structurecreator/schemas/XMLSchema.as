@@ -1,5 +1,7 @@
 package com.structurecreator.schemas 
 {
+	import com.structurecreator.customvars.CustomVariables;
+	import com.structurecreator.customvars.CustomVarsHolder;
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.FileCreator;
 	import flash.events.Event;
@@ -16,13 +18,14 @@ package com.structurecreator.schemas
 	 */
 	public class XMLSchema 
 	{
-		private static var _xmlUrl:String = '';
-		private static var _directory:String = '';
+		private var _xmlUrl:String = '';
+		private var _directory:String = '';
 		private var _xmlLoader:URLLoader;
 		private var _totalFolders:int;
 		private var _totalFiles:int;
 		private var _foldersCreated:int;
 		private var _filesCreated:int;
+		private var _customVars:Array;
 		
 		public function XMLSchema(schema_xml:String, directory:String) 
 		{
@@ -60,6 +63,8 @@ package com.structurecreator.schemas
 			_totalFolders = xml.descendants('folder').length();
 			_filesCreated = 0;
 			
+			_xmlLoader = null;
+			
 			createStructure(xml);
 		}
 		
@@ -74,10 +79,12 @@ package com.structurecreator.schemas
 			var url:String;
 			var fc:FileCreator;
 			
+			
 			for (var j:int = 0; j < xml.file.length(); j++) 
 			{
 				trace("create file: " + xml.file[j].@name);
 				url = xml.file[j].@url;
+				trace("URL = ", url);
 				
 				fc = new FileCreator(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
 				fc.addEventListener(FileEvent.FILE_CREATED, fc_fileCreated);
@@ -85,17 +92,19 @@ package com.structurecreator.schemas
 			
 			//FOLDERS
 			var dir:File;
+			var newname:String;
 			for (var i:int = 0; i < xml.folder.length(); ++i)
 			{
 				trace("create folder : " + xml.folder[i].@name);
 				dir = new File();
 				dir.url = _directory + currPath;
-				dir = dir.resolvePath(xml.folder[i].@name);
+				newname = CustomVariables.getInstance().updateVars(xml.folder[i].@name);
+				dir = dir.resolvePath(newname);
 				dir.createDirectory();
 				
 				if (xml.folder[i].folder.length() > 0 || xml.folder[i].file.length() > 0)
 				{
-					createStructure(xml.folder[i] as XML, currPath + xml.folder[i].@name + '/');
+					createStructure(xml.folder[i] as XML, currPath + newname + '/');
 				}
 				_foldersCreated += 1;
 			}
@@ -103,6 +112,7 @@ package com.structurecreator.schemas
 			if (_filesCreated >= _totalFiles && _foldersCreated >= _totalFolders)
 			{
 				trace("DONE!!!");
+				cleanUp();
 			}
 		}
 		
@@ -113,7 +123,14 @@ package com.structurecreator.schemas
 			if (_filesCreated >= _totalFiles && _foldersCreated >= _totalFolders)
 			{
 				trace("DONE!!!");
+				cleanUp();
 			}
+		}
+		
+		private function cleanUp():void 
+		{
+			_customVars = null;
+			_xmlLoader = null;
 		}
 		
 		private function secError(e:SecurityErrorEvent):void 

@@ -1,11 +1,13 @@
 package com.structurecreator 
 {
+	import com.structurecreator.customvars.CustomVariables;
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.files.FileTypes;
 	import com.structurecreator.files.MicrosoftX;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
@@ -13,6 +15,7 @@ package com.structurecreator
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.utils.setTimeout;
 	/**
 	 * ...
 	 * @author Ed Moore
@@ -29,12 +32,12 @@ package com.structurecreator
 		private var _urlLoader:URLLoader;
 		private var _file_ext:String;
 		
-		public function FileCreator(dir:String, name:String = '', url:String = '', file_content:String = ''/*, quality:uint = 80*/)  
+		public function FileCreator(dir:String, name:String = '', url:String = '', file_content:String = '')  
 		{
 			_dir = dir;
 			_url = url;
 			
-			_name = name;
+			_name = CustomVariables.getInstance().updateVars(name);
 			_file_content = file_content;
 			
 			_file_ext = (_name.substr(_name.lastIndexOf('.') + 1) as String).toLowerCase();
@@ -110,6 +113,7 @@ package com.structurecreator
 		
 		private function mx_fileCreated(e:FileEvent):void 
 		{
+			(e.currentTarget as MicrosoftX).removeEventListener(FileEvent.FILE_CREATED, mx_fileCreated);
 			complete();
 		}
 		
@@ -121,18 +125,27 @@ package com.structurecreator
 			trace("Load file contents for " + _name);
 			_urlLoader = new URLLoader();
 			_urlLoader.addEventListener(Event.COMPLETE, textFileLoaded);
+			_urlLoader.addEventListener(ProgressEvent.PROGRESS, urlLoader_progress);
 			_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
 			_urlLoader.load(new URLRequest(_url));
+		}
+		
+		private function urlLoader_progress(e:ProgressEvent):void 
+		{
+			trace(e.bytesLoaded / e.bytesTotal);
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
 		{
 			trace("Error loading text file");
+			//TODO add to log file
+			complete();
 		}
 		
 		private function textFileLoaded(e:Event):void
 		{
 			_urlLoader.removeEventListener(Event.COMPLETE, textFileLoaded);
+			_urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
 			trace("File contents LOADED for " + _name);
 			_file_content = e.currentTarget.data as String;
 			createTextFile();
@@ -148,7 +161,7 @@ package com.structurecreator
 			
 			var fs:FileStream = new FileStream();
 			fs.open(file, FileMode.WRITE);
-			fs.writeUTFBytes(_file_content);
+			fs.writeUTFBytes(CustomVariables.getInstance().updateVars(_file_content));
 			fs.close();
 			
 			complete();
@@ -157,7 +170,10 @@ package com.structurecreator
 		private function complete():void 
 		{
 			trace(_name, 'created');
-			dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));
+			_loader = null;
+			_urlLoader = null;
+			
+			setTimeout(function() { dispatchEvent(new FileEvent(FileEvent.FILE_CREATED)); }, 100);
 		}
 		
 	}
