@@ -39,7 +39,7 @@ package com.structurecreator.db
 			trace("create db schema");
 			_sqlStatement = new SQLStatement();
 			_sqlStatement.sqlConnection = _sqlConnection;
-			_sqlStatement.text = "CREATE TABLE IF NOT EXISTS profiles (profile_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE)";
+			_sqlStatement.text = "CREATE TABLE IF NOT EXISTS profiles (profile_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, schema_url TEXT)";
 			_sqlStatement.addEventListener(SQLEvent.RESULT, onDBCreated);
 			_sqlStatement.execute();
 			
@@ -67,7 +67,6 @@ package com.structurecreator.db
 				
 				trace("Database connection is open");
 				//getProfiles();
-				
 			}
 		}
 		
@@ -84,7 +83,7 @@ package com.structurecreator.db
 		{
 			_sqlStatement.removeEventListener(SQLEvent.RESULT, onGetProfiles);
 			var result:SQLResult = _sqlStatement.getResult();
-			dispatchEvent(new DatabaseEvent(DatabaseEvent.GOT_PROFILES, result.data));
+			dispatchEvent(new DatabaseEvent(DatabaseEvent.FOUND_PROFILES, result.data));
 		}
 		
 		/**
@@ -92,14 +91,15 @@ package com.structurecreator.db
 		 * @param	name		Name for the label in the combo box
 		 * @param	customVars	Array of objects that contain variable name and values
 		 */
-		public function addProfile(name:String, customVars:Array=null):void
+		public function addProfile(name:String, customVars:Array=null, schema_url:String=''):void
 		{
 			_customVars = customVars;
 			//TODO Check if name exists
 			_sqlStatement = new SQLStatement();
 			_sqlStatement.sqlConnection = _sqlConnection;
-			_sqlStatement.text = "INSERT INTO profiles (name) VALUES (?)";
+			_sqlStatement.text = "INSERT INTO profiles (name, schema_url) VALUES (?, ?)";
 			_sqlStatement.parameters[0] = name;
+			_sqlStatement.parameters[1] = schema_url;
 			_sqlStatement.addEventListener(SQLEvent.RESULT, onProfileAdded);
 			_sqlStatement.execute();
 		}
@@ -108,9 +108,24 @@ package com.structurecreator.db
 		{
 			_sqlStatement = new SQLStatement();
 			_sqlStatement.sqlConnection = _sqlConnection;
+			_sqlStatement.text = "SELECT schema_url FROM profiles WHERE profile_id=" + id;
+			_sqlStatement.addEventListener(SQLEvent.RESULT, onGetProfileSchema);
+			_sqlStatement.execute();
+			
+			
+			_sqlStatement = new SQLStatement();
+			_sqlStatement.sqlConnection = _sqlConnection;
 			_sqlStatement.text = "SELECT * FROM customvars WHERE profile_id=" + id;
 			_sqlStatement.addEventListener(SQLEvent.RESULT, onGetProfileById);
 			_sqlStatement.execute();
+		}
+		
+		private function onGetProfileSchema(e:SQLEvent):void 
+		{
+			_sqlStatement.removeEventListener(SQLEvent.RESULT, onGetProfileSchema);
+			var result:SQLResult = _sqlStatement.getResult();
+			//trace(result.rowsAffected);
+			dispatchEvent(new DatabaseEvent(DatabaseEvent.FOUND_SCHEMA_URL, result.data));
 		}
 		
 		private function onGetProfileById(e:SQLEvent):void 
@@ -118,7 +133,7 @@ package com.structurecreator.db
 			_sqlStatement.removeEventListener(SQLEvent.RESULT, onGetProfiles);
 			var result:SQLResult = _sqlStatement.getResult();
 			trace(result.rowsAffected);
-			dispatchEvent(new DatabaseEvent(DatabaseEvent.GOT_SINGLE_PROFILE, result.data));
+			dispatchEvent(new DatabaseEvent(DatabaseEvent.FOUND_SINGLE_PROFILE, result.data));
 		}
 		
 		private function onProfileAdded(e:SQLEvent):void 

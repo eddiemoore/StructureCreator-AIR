@@ -9,9 +9,10 @@ package com.structurecreator.events
 	public class DatabaseEvent extends Event 
 	{
 		public static const DB_CREATED:String = 'dbCreated';
-		public static const GOT_PROFILES:String = 'gotProfiles';
+		public static const FOUND_PROFILES:String = 'foundProfiles';
 		public static const PROFILE_ADDED:String = 'profileAdded';
-		static public const GOT_SINGLE_PROFILE:String = "gotSingleProfile";
+		static public const FOUND_SINGLE_PROFILE:String = "foundSingleProfile";
+		static public const FOUND_SCHEMA_URL:String = "foundSchemaUrl";
 		private var _result:Array;
 		
 		public function DatabaseEvent(type:String, result:Array=null, bubbles:Boolean=false, cancelable:Boolean=false) 

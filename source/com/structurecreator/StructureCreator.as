@@ -81,10 +81,21 @@ package com.structurecreator
 			_db = new Database();
 			_db.addEventListener(DatabaseEvent.DB_CREATED, onDatabaseCreated);
 			_db.addEventListener(DatabaseEvent.PROFILE_ADDED, onProfileAdded);
-			_db.addEventListener(DatabaseEvent.GOT_SINGLE_PROFILE, onGotSingleProfile);
-			_db.addEventListener(DatabaseEvent.GOT_PROFILES, onGotProfiles);
+			_db.addEventListener(DatabaseEvent.FOUND_SINGLE_PROFILE, onGotSingleProfile);
+			_db.addEventListener(DatabaseEvent.FOUND_SCHEMA_URL, onFoundSchemaURL);
+			_db.addEventListener(DatabaseEvent.FOUND_PROFILES, onGotProfiles);
 			//_db.addProfile();
 			_db.init();
+		}
+		
+		private function onFoundSchemaURL(e:DatabaseEvent):void 
+		{
+			trace("FOUND SCHEMA URL");
+			if (e.result)
+			{
+				(schema_file_cb as CheckBox).selected = true;
+				schema_txt.text = e.result[0].schema_url;
+			}
 		}
 		
 		private function onDatabaseCreated(e:DatabaseEvent):void 
@@ -97,6 +108,7 @@ package com.structurecreator
 		private function onProfileChange(e:Event):void 
 		{
 			var val:String = (project_profile_cb as ComboBox).selectedItem.value;
+			schema_txt.text = '';
 			if (val != null && val != "")
 				_db.getProfileById(int(val));
 			else
@@ -171,7 +183,7 @@ package com.structurecreator
 					custom_vars_scroll.verticalScrollPosition = custom_vars_scroll.maxVerticalScrollPosition;
 					break;
 				case 'save_profile_btn' :
-					var saveProfileBox:SaveProfile = new SaveProfile(_db, _cvh.getFullData());
+					var saveProfileBox:SaveProfile = new SaveProfile(_db, _cvh.getFullData(), schema_txt.text);
 					saveProfileBox.name = 'saveProfileBox';
 					addChild(saveProfileBox);
 					break;
@@ -237,7 +249,12 @@ package com.structurecreator
 		
 		private function createProjectStructure():void
 		{
-			var schemaFileType:String = schema_file.nativePath.substr(schema_file.nativePath.lastIndexOf('.') + 1);
+			var schemaFileType:String
+			if (!(schema_file_cb as CheckBox).selected)
+				schemaFileType = schema_file.nativePath.substr(schema_file.nativePath.lastIndexOf('.') + 1);
+			else
+				schemaFileType = schema_txt.text.substr(schema_txt.text.lastIndexOf('.') +1);
+				
 			CustomVariables.getInstance().variables = _cvh.getFullData();
 			
 			switch (schemaFileType.toLowerCase())
