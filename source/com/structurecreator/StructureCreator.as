@@ -4,6 +4,7 @@ package com.structurecreator
 	import com.structurecreator.customvars.CustomVarsHolder;
 	import com.structurecreator.db.Database;
 	import com.structurecreator.events.DatabaseEvent;
+	import com.structurecreator.profiles.SaveProfile;
 	import com.structurecreator.schemas.XMLSchema;
 	import fl.containers.ScrollPane;
 	import fl.controls.CheckBox;
@@ -148,7 +149,8 @@ package com.structurecreator
 					custom_vars_scroll.verticalScrollPosition = custom_vars_scroll.maxVerticalScrollPosition;
 					break;
 				case 'save_profile_btn' :
-					
+					var saveProfileBox:SaveProfile = new SaveProfile(_db);
+					addChild(saveProfileBox);
 					break;
 				case 'create_btn' :
 					createProjectStructure();

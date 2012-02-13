@@ -15,11 +15,11 @@ package com.structurecreator.db
 		private var _sqlConnection:SQLConnection;
 		private var _sqlStatement:SQLStatement;
 		private var _customVars:Array;
-		var _db:File;
+		private var _db:File;
 		
 		public function Database() 
 		{
-			_db = File.applicationStorageDirectory.resolvePath("profiles.db");
+			_db = File.applicationStorageDirectory.resolvePath("structurecreator.db");
 			
 			_sqlConnection = new SQLConnection();			
 			
