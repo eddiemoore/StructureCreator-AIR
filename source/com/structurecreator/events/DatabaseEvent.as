@@ -11,6 +11,7 @@ package com.structurecreator.events
 		public static const DB_CREATED:String = 'dbCreated';
 		public static const GOT_PROFILES:String = 'gotProfiles';
 		public static const PROFILE_ADDED:String = 'profileAdded';
+		static public const GOT_SINGLE_PROFILE:String = "gotSingleProfile";
 		private var _result:Array;
 		
 		public function DatabaseEvent(type:String, result:Array=null, bubbles:Boolean=false, cancelable:Boolean=false) 

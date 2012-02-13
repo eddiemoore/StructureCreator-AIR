@@ -39,8 +39,11 @@ package com.structurecreator.db
 			trace("create db schema");
 			_sqlStatement = new SQLStatement();
 			_sqlStatement.sqlConnection = _sqlConnection;
-			_sqlStatement.text = "CREATE TABLE IF NOT EXISTS profiles (profile_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)";
+			_sqlStatement.text = "CREATE TABLE IF NOT EXISTS profiles (profile_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE)";
 			_sqlStatement.addEventListener(SQLEvent.RESULT, onDBCreated);
+			_sqlStatement.execute();
+			
+			_sqlStatement.text = "CREATE TABLE IF NOT EXISTS customvars (customvar_id INTEGER PRIMARY KEY, variable TEXT, value TEXT, profile_id INTEGER, FOREIGN KEY(profile_id) REFERENCES profiles(profile_id))";
 			_sqlStatement.execute();
 		}
 		
@@ -89,7 +92,7 @@ package com.structurecreator.db
 		 * @param	name		Name for the label in the combo box
 		 * @param	customVars	Array of objects that contain variable name and values
 		 */
-		public function addProfile(name:String="HTML5 Boilerplate", customVars:Array=null):void
+		public function addProfile(name:String, customVars:Array=null):void
 		{
 			_customVars = customVars;
 			//TODO Check if name exists
@@ -101,10 +104,28 @@ package com.structurecreator.db
 			_sqlStatement.execute();
 		}
 		
+		public function getProfileById(id:int):void 
+		{
+			_sqlStatement = new SQLStatement();
+			_sqlStatement.sqlConnection = _sqlConnection;
+			_sqlStatement.text = "SELECT * FROM customvars WHERE profile_id=" + id;
+			_sqlStatement.addEventListener(SQLEvent.RESULT, onGetProfileById);
+			_sqlStatement.execute();
+		}
+		
+		private function onGetProfileById(e:SQLEvent):void 
+		{
+			_sqlStatement.removeEventListener(SQLEvent.RESULT, onGetProfiles);
+			var result:SQLResult = _sqlStatement.getResult();
+			trace(result.rowsAffected);
+			dispatchEvent(new DatabaseEvent(DatabaseEvent.GOT_SINGLE_PROFILE, result.data));
+		}
+		
 		private function onProfileAdded(e:SQLEvent):void 
 		{
 			_sqlStatement.removeEventListener(SQLEvent.RESULT, onProfileAdded);
 			var result:SQLResult = _sqlStatement.getResult();
+			var id:Number = result.lastInsertRowID;
 			
 			if (_customVars) 
 			{
@@ -115,15 +136,21 @@ package com.structurecreator.db
 					o = _customVars[i];
 					_sqlStatement = new SQLStatement();
 					_sqlStatement.sqlConnection = _sqlConnection;
-					_sqlStatement.text = "INSERT INTO customvars (variable, value) VALUES (?, ?)";
+					_sqlStatement.text = "INSERT INTO customvars (variable, value, profile_id) VALUES (?, ?, ?)";
 					_sqlStatement.parameters[0] = o.variable;
 					_sqlStatement.parameters[1] = o.value;
-					//_sqlStatement.addEventListener(SQLEvent.RESULT, onProfileAdded);
+					_sqlStatement.parameters[2] = id;
+					_sqlStatement.addEventListener(SQLEvent.RESULT, onCustomVarAdded);
 					_sqlStatement.execute();
 				}
 			}
 			//result.lastInsertRowID
 			dispatchEvent(new DatabaseEvent(DatabaseEvent.PROFILE_ADDED, result.data));
+		}
+		
+		private function onCustomVarAdded(e:SQLEvent):void 
+		{
+			trace("custom var type = " + e.type);
 		}
 		
 	}

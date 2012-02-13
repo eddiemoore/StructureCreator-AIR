@@ -53,6 +53,8 @@ package com.structurecreator
 			create_btn.addEventListener(MouseEvent.CLICK, handleClicks);
 			save_profile_btn.addEventListener(MouseEvent.CLICK, handleClicks);
 			
+			(project_profile_cb as ComboBox).addEventListener(Event.CHANGE, onProfileChange);
+			
 			var tf:TextFormat = new TextFormat();
 			tf.color = 0xffffff;
 			(schema_file_cb as CheckBox).setStyle("textFormat", tf);
@@ -79,6 +81,7 @@ package com.structurecreator
 			_db = new Database();
 			_db.addEventListener(DatabaseEvent.DB_CREATED, onDatabaseCreated);
 			_db.addEventListener(DatabaseEvent.PROFILE_ADDED, onProfileAdded);
+			_db.addEventListener(DatabaseEvent.GOT_SINGLE_PROFILE, onGotSingleProfile);
 			_db.addEventListener(DatabaseEvent.GOT_PROFILES, onGotProfiles);
 			//_db.addProfile();
 			_db.init();
@@ -91,10 +94,27 @@ package com.structurecreator
 			_db.getProfiles();
 		}
 		
+		private function onProfileChange(e:Event):void 
+		{
+			var val:String = (project_profile_cb as ComboBox).selectedItem.value;
+			if (val != null && val != "")
+				_db.getProfileById(int(val));
+			else
+				_cvh.clearAll();
+		}
+		
+		private function onGotSingleProfile(e:DatabaseEvent):void
+		{
+			trace("got single profile");
+			if (e.result)
+				_cvh.addVariables(e.result);
+			//trace(e.result);
+		}
+		
 		private function onGotProfiles(e:DatabaseEvent):void 
 		{
 			//TODO update profiles combo
-			if (e.result.length > 0)
+			if (e.result && e.result.length > 0)
 			{
 				var v:Array = [{'label':'', 'data':''}];
 				for (var i:int = 0; i < e.result.length; i++) 
@@ -109,6 +129,8 @@ package com.structurecreator
 		
 		private function onProfileAdded(e:DatabaseEvent):void 
 		{
+			if (getChildByName('saveProfileBox'))
+				removeChild(getChildByName('saveProfileBox'));
 			_db.getProfiles();
 		}
 		
@@ -149,7 +171,8 @@ package com.structurecreator
 					custom_vars_scroll.verticalScrollPosition = custom_vars_scroll.maxVerticalScrollPosition;
 					break;
 				case 'save_profile_btn' :
-					var saveProfileBox:SaveProfile = new SaveProfile(_db);
+					var saveProfileBox:SaveProfile = new SaveProfile(_db, _cvh.getFullData());
+					saveProfileBox.name = 'saveProfileBox';
 					addChild(saveProfileBox);
 					break;
 				case 'create_btn' :
