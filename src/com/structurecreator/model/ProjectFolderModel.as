@@ -1,12 +1,15 @@
 package com.structurecreator.model
 {
+	import com.structurecreator.events.ProjectFolderEvent;
+	
+	import flash.events.Event;
 	import flash.filesystem.File;
 	
 	import org.robotlegs.mvcs.Actor;
 	
 	public class ProjectFolderModel extends Actor
 	{
-		private var _projectFolder:File;
+		private var _projectFolder:File = File.documentsDirectory;
 		
 		public function ProjectFolderModel()
 		{
@@ -17,9 +20,15 @@ package com.structurecreator.model
 			return _projectFolder;
 		}
 		
-		public function set projectFolder(folder:File):void
+		public function selectProjectFolder():void
 		{
-			_projectFolder = folder;
+			projectFolder.browseForDirectory("Select Project Folder");
+			projectFolder.addEventListener(Event.SELECT, onProjectFolderSelected);
+		}
+		
+		protected function onProjectFolderSelected(event:Event):void
+		{
+			eventDispatcher.dispatchEvent(new ProjectFolderEvent(ProjectFolderEvent.PROJECT_FOLDER_SELECTED));
 		}
 	}
 }

@@ -1,11 +1,12 @@
 package com.structurecreator
 {
+	import com.structurecreator.model.ProjectFolderModel;
 	import com.structurecreator.view.CreateButton;
 	import com.structurecreator.view.CreateButtonMediator;
-	import com.structurecreator.view.ProjectFolderButton;
-	import com.structurecreator.view.ProjectFolderButtonMediator;
-	import com.structurecreator.view.SchemaButton;
-	import com.structurecreator.view.SchemaButtonMediator;
+	import com.structurecreator.view.ProjectFolderMediator;
+	import com.structurecreator.view.ProjectFolderView;
+	import com.structurecreator.view.SchemaSelectMediator;
+	import com.structurecreator.view.SchemaSelectView;
 	
 	import flash.display.DisplayObjectContainer;
 	
@@ -21,9 +22,10 @@ package com.structurecreator
 		override public function startup():void
 		{
 			trace("App Started");
+			injector.mapSingleton(ProjectFolderModel);
 			
-			//mediatorMap.mapView(ProjectFolderButton, ProjectFolderButtonMediator);
-			mediatorMap.mapView(SchemaButton, SchemaButtonMediator);
+			mediatorMap.mapView(ProjectFolderView, ProjectFolderMediator);
+			mediatorMap.mapView(SchemaSelectView, SchemaSelectMediator);
 			mediatorMap.mapView(CreateButton, CreateButtonMediator);
 			
 			super.startup();
