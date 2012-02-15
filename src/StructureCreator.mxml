@@ -1,8 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					   xmlns:s="library://ns.adobe.com/flex/spark" 
-					   xmlns:mx="library://ns.adobe.com/flex/mx">
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   xmlns:structurecreator="com.structurecreator.*"
+					   xmlns:view="com.structurecreator.view.*"
+					   width="320" height="500" backgroundColor="#666666">
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<structurecreator:MainContext contextView="{this}" />
 	</fx:Declarations>
+	
+	<s:layout>
+		<s:VerticalLayout paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10" gap="20" />
+	</s:layout>
+	
+	<s:Label color="#CFCECD" fontSize="20" text="StructureCreator 0.1"/>
+	
+	<!-- Profile Select -->
+	<s:Group width="100%">
+		<s:layout>
+			<s:VerticalLayout gap="5" />
+		</s:layout>
+		<s:Label text="Profiles"/>
+		<view:ProfileSelect />	
+	</s:Group>
+	
+	
+	<!-- Project Folder Select -->
+	<s:Group width="100%">
+		<s:layout>
+			<s:VerticalLayout gap="5" />
+		</s:layout>
+		<s:Label text="Project Folder"/>
+		<s:HGroup width="100%">
+			<view:ProjectFolderField width="100%" />
+			<view:ProjectFolderButton />
+		</s:HGroup>
+	</s:Group>
+	
+	<!-- Schema Select -->
+	<s:Group width="100%">
+		<s:layout>
+			<s:VerticalLayout gap="5" />
+		</s:layout>
+		<s:Label text="Select Schema"/>
+		<s:HGroup width="100%">
+			<view:SchemaField width="100%" />
+			<view:SchemaButton />
+		</s:HGroup>
+	</s:Group>
+	
+	<!-- Create Button -->
+	<view:CreateButton />
+	
+	
 </s:WindowedApplication>
