@@ -5,6 +5,6 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:TextInput id="projectFolderTI" width="100%" />
+	<s:TextInput id="projectFolderTI" width="100%" enabled="false" />
 	<s:Button id="browse" label="..." width="50" />
 </s:HGroup>

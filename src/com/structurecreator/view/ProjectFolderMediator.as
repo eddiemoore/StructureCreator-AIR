@@ -2,7 +2,6 @@ package com.structurecreator.view
 {
 	import com.structurecreator.events.ProjectFolderEvent;
 	import com.structurecreator.model.ProjectFolderModel;
-	import com.structurecreator.model.StructureCreatorModel;
 	
 	import flash.events.MouseEvent;
 	

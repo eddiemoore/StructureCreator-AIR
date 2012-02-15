@@ -1,5 +1,8 @@
 package com.structurecreator.view
 {
+	import com.structurecreator.model.StructureCreatorModel;
+	import com.structurecreator.model.SchemaModel;
+	
 	import flash.events.MouseEvent;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -9,9 +12,12 @@ package com.structurecreator.view
 		[Inject]
 		public var view:CreateButton;
 		
+		[Inject]
+		public var model:StructureCreatorModel;
+		
 		public function CreateButtonMediator()
 		{
-			super();
+			
 		}
 		
 		override public function onRegister():void
@@ -22,6 +28,7 @@ package com.structurecreator.view
 		protected function onClick(event:MouseEvent):void
 		{
 			trace("Clicked");
+			model.startCreation();
 		}
 	}
 }
