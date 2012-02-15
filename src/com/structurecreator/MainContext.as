@@ -1,5 +1,7 @@
 package com.structurecreator
 {
+	import com.structurecreator.model.ProjectFolderModel;
+	import com.structurecreator.model.SchemaModel;
 	import com.structurecreator.model.StructureCreatorModel;
 	import com.structurecreator.view.CreateButton;
 	import com.structurecreator.view.CreateButtonMediator;
@@ -21,7 +23,8 @@ package com.structurecreator
 		override public function startup():void
 		{
 			trace("App Started");
-			injector.mapSingleton(StructureCreatorModel);
+			injector.mapSingleton(ProjectFolderModel);
+			injector.mapSingleton(SchemaModel);
 			
 			mediatorMap.mapView(ProjectFolderView, ProjectFolderMediator);
 			mediatorMap.mapView(SchemaSelectView, SchemaSelectMediator);
