@@ -1,16 +1,21 @@
 package com.structurecreator
 {
 	import com.structurecreator.events.StructureCreatorEvent;
+	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.ProjectFolderModel;
 	import com.structurecreator.model.SchemaModel;
 	import com.structurecreator.model.StructureCreatorModel;
 	import com.structurecreator.model.schemas.XMLSchema;
 	import com.structurecreator.view.CreateButton;
 	import com.structurecreator.view.CreateButtonMediator;
+	import com.structurecreator.view.CustomVariablesMediator;
+	import com.structurecreator.view.CustomVariablesView;
 	import com.structurecreator.view.ProjectFolderMediator;
 	import com.structurecreator.view.ProjectFolderView;
 	import com.structurecreator.view.SchemaSelectMediator;
 	import com.structurecreator.view.SchemaSelectView;
+	import com.structurecreator.view.customvars.CustomVariableBarMediator;
+	import com.structurecreator.view.customvars.CustomVariableBarView;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
@@ -32,10 +37,13 @@ package com.structurecreator
 			injector.mapSingleton(SchemaModel);
 			injector.mapSingleton(XMLSchema);
 			injector.mapSingleton(StructureCreatorModel);
+			injector.mapSingleton(CustomVariableModel);
 			
 			mediatorMap.mapView(ProjectFolderView, ProjectFolderMediator);
 			mediatorMap.mapView(SchemaSelectView, SchemaSelectMediator);
 			mediatorMap.mapView(CreateButton, CreateButtonMediator);
+			mediatorMap.mapView(CustomVariablesView, CustomVariablesMediator);
+			mediatorMap.mapView(CustomVariableBarView, CustomVariableBarMediator);
 			
 			eventDispatcher.addEventListener(StructureCreatorEvent.CREATION_COMPLETE, onCreationComplete);
 			

@@ -5,8 +5,17 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Scroller width="100%" height="100%">
-		
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<s:Label text="Custom Variables" />
+	<s:Scroller width="100%" height="100%" id="scroller" >
+		<s:Group id="customVarsHolder">
+			<s:layout>
+				<s:VerticalLayout gap="10" />
+			</s:layout>
+			
+		</s:Group>
 	</s:Scroller>
-	<s:Button id="add" label="+" width="30" right="0" bottom="0" />
+	<s:Button id="add" label="+" width="30" />
 </s:Group>
