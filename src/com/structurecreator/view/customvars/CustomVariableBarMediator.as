@@ -2,6 +2,7 @@ package com.structurecreator.view.customvars
 {
 	import com.structurecreator.model.CustomVariableModel;
 	
+	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -14,18 +15,23 @@ package com.structurecreator.view.customvars
 		[Inject]
 		public var model:CustomVariableModel;
 		
+		private var _id:uint;
+		
 		public function CustomVariableBarMediator()
 		{
 		}
 		
 		override public function onRegister():void
 		{
-			view.variableTI.addEventListener(KeyboardEvent.KEY_UP, onKeyUp)
+			_id = model.customVars.length - 1;
+			view.variableTI.addEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
+			view.valueTI.addEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
 		}
 		
-		protected function onKeyUp(event:KeyboardEvent):void
+		protected function onFocusOut(event:FocusEvent):void
 		{
-			trace("Update custom var VO");
+			//trace("Update custom var VO");
+			model.updateVariableById(_id, view.variableTI.text, view.valueTI.text);
 		}
 	}
 }

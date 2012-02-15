@@ -3,9 +3,11 @@ package com.structurecreator.model.schemas
 	
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
+	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.files.FileCreatorModel;
 	
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.filesystem.File;
@@ -23,7 +25,9 @@ package com.structurecreator.model.schemas
 		private var _totalFiles:int;
 		private var _foldersCreated:int;
 		private var _filesCreated:int;
-		private var _customVars:Array;
+		
+		[Inject]
+		public var customVarsModel:CustomVariableModel;
 		
 		public function XMLSchema()
 		{
@@ -90,7 +94,7 @@ package com.structurecreator.model.schemas
 				trace("URL = ", url);
 				
 				fc = new FileCreatorModel(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
-				fc.addEventListener(FileEvent.FILE_CREATED, fc_fileCreated);
+				fc.addEventListener(FileEvent.FILE_CREATED, onFileCreated);
 			}
 			
 			//FOLDERS
@@ -101,7 +105,7 @@ package com.structurecreator.model.schemas
 				trace("create folder : " + xml.folder[i].@name);
 				dir = new File();
 				dir.url = _directory + currPath;
-				newname = xml.folder[i].@name; //CustomVariables.getInstance().updateVars(xml.folder[i].@name);
+				newname = customVarsModel.updateVariablesInStr(xml.folder[i].@name);
 				dir = dir.resolvePath(newname);
 				dir.createDirectory();
 				
@@ -111,20 +115,23 @@ package com.structurecreator.model.schemas
 				}
 				_foldersCreated += 1;
 			}
-			
+			trace("Files : " + _filesCreated + '/' + _totalFiles);
+			trace("Folders : " + _foldersCreated + '/' + _totalFolders);
 			if (_filesCreated >= _totalFiles && _foldersCreated >= _totalFolders)
 			{
-				trace("DONE!!!");
+				trace("Created Everything");
+				eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.CREATION_COMPLETE));
 				cleanUp();
 			}
 		}
 		
-		private function fc_fileCreated(e:FileEvent):void 
+		private function onFileCreated(e:FileEvent):void 
 		{
 			_filesCreated += 1;
 			trace(_filesCreated, '/', _totalFiles);
 			if (_filesCreated >= _totalFiles && _foldersCreated >= _totalFolders)
 			{
+				trace("Created Everything");
 				eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.CREATION_COMPLETE));
 				cleanUp();
 			}
@@ -132,7 +139,6 @@ package com.structurecreator.model.schemas
 		
 		private function cleanUp():void 
 		{
-			_customVars = null;
 			_xmlLoader = null;
 		}
 		

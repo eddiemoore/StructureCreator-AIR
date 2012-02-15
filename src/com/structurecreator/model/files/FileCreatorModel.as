@@ -6,6 +6,7 @@ package com.structurecreator.model.files
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
+	import flash.events.TimerEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
@@ -13,6 +14,7 @@ package com.structurecreator.model.files
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
+	import flash.utils.Timer;
 	
 	public class FileCreatorModel extends EventDispatcher
 	{
@@ -168,7 +170,14 @@ package com.structurecreator.model.files
 			_loader = null;
 			_urlLoader = null;
 			
-			//setTimeout(function() { dispatchEvent(new FileEvent(FileEvent.FILE_CREATED)); }, 100);
+			var t:Timer = new Timer(100,1);
+			t.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+			t.start();
+			//dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));
+		}
+		
+		protected function onTimerComplete(event:TimerEvent):void
+		{
 			dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));
 		}
 	}

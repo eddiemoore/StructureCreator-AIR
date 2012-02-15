@@ -30,9 +30,8 @@ package com.structurecreator.view
 		
 		private function onCustomVarAdded(e:CustomVarsEvent):void
 		{
-			trace("Added Custom Variable");
+			//trace("Added Custom Variable");
 			var cvb:CustomVariableBarView = new CustomVariableBarView();
-			trace(model.customVars.length, cvb.height);
 			cvb.y = model.customVars.length * cvb.height;
 			view.customVarsHolder.addElement(cvb);
 		}
