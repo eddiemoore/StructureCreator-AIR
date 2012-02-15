@@ -17,7 +17,6 @@ package com.structurecreator
 	{
 		public function MainContext()
 		{
-			super();
 		}
 		
 		override public function startup():void

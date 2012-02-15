@@ -1,7 +1,7 @@
 package com.structurecreator.view
 {
 	import com.structurecreator.events.SchemaEvent;
-	import com.structurecreator.model.SchemaModel;
+	import com.structurecreator.model.StructureCreatorModel;
 	
 	import flash.events.MouseEvent;
 	
@@ -13,7 +13,7 @@ package com.structurecreator.view
 		public var view:SchemaSelectView;
 		
 		[Inject]
-		public var model:SchemaModel;
+		public var model:StructureCreatorModel;
 		
 		public function SchemaSelectMediator()
 		{

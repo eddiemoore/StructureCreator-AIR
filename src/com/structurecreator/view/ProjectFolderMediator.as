@@ -1,7 +1,7 @@
 package com.structurecreator.view
 {
 	import com.structurecreator.events.ProjectFolderEvent;
-	import com.structurecreator.model.ProjectFolderModel;
+	import com.structurecreator.model.StructureCreatorModel;
 	
 	import flash.events.MouseEvent;
 	
@@ -13,7 +13,7 @@ package com.structurecreator.view
 		public var view:ProjectFolderView;
 		
 		[Inject]
-		public var model:ProjectFolderModel;
+		public var model:StructureCreatorModel;
 		
 		public function ProjectFolderMediator()
 		{
