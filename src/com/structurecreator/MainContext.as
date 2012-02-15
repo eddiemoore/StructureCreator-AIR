@@ -5,7 +5,9 @@ package com.structurecreator
 	import com.structurecreator.model.ProjectFolderModel;
 	import com.structurecreator.model.SchemaModel;
 	import com.structurecreator.model.StructureCreatorModel;
+	import com.structurecreator.model.files.FileCreatorModel;
 	import com.structurecreator.model.schemas.XMLSchema;
+	import com.structurecreator.services.FileCreateService;
 	import com.structurecreator.view.CreateButton;
 	import com.structurecreator.view.CreateButtonMediator;
 	import com.structurecreator.view.CustomVariablesMediator;
@@ -38,6 +40,8 @@ package com.structurecreator
 			injector.mapSingleton(XMLSchema);
 			injector.mapSingleton(StructureCreatorModel);
 			injector.mapSingleton(CustomVariableModel);
+			
+			injector.mapClass(FileCreateService, FileCreateService);
 			
 			mediatorMap.mapView(ProjectFolderView, ProjectFolderMediator);
 			mediatorMap.mapView(SchemaSelectView, SchemaSelectMediator);

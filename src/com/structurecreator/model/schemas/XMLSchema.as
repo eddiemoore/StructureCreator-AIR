@@ -4,7 +4,8 @@ package com.structurecreator.model.schemas
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
 	import com.structurecreator.model.CustomVariableModel;
-	import com.structurecreator.model.files.FileCreatorModel;
+	//import com.structurecreator.model.files.FileCreatorModel;
+	import com.structurecreator.services.FileCreateService;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -28,6 +29,9 @@ package com.structurecreator.model.schemas
 		
 		[Inject]
 		public var customVarsModel:CustomVariableModel;
+		
+		[Inject]
+		public var fileCreatorService:FileCreateService;
 		
 		public function XMLSchema()
 		{
@@ -84,7 +88,7 @@ package com.structurecreator.model.schemas
 			//FILES
 			var file:File;
 			var url:String;
-			var fc:FileCreatorModel;
+			//var fc:FileCreatorModel;
 			
 			
 			for (var j:int = 0; j < xml.file.length(); j++) 
@@ -93,8 +97,8 @@ package com.structurecreator.model.schemas
 				url = xml.file[j].@url;
 				trace("URL = ", url);
 				
-				fc = new FileCreatorModel(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
-				fc.addEventListener(FileEvent.FILE_CREATED, onFileCreated);
+				fileCreatorService.init(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
+				eventDispatcher.addEventListener(FileEvent.FILE_CREATED, onFileCreated);
 			}
 			
 			//FOLDERS
