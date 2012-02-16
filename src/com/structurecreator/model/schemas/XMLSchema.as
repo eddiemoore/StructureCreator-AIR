@@ -4,8 +4,8 @@ package com.structurecreator.model.schemas
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
 	import com.structurecreator.model.CustomVariableModel;
-	//import com.structurecreator.model.files.FileCreatorModel;
 	import com.structurecreator.services.FileCreateService;
+	import com.structurecreator.services.vo.FileDetailsVO;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -87,17 +87,23 @@ package com.structurecreator.model.schemas
 			
 			//FILES
 			var file:File;
-			var url:String;
+			//var url:String;
 			//var fc:FileCreatorModel;
 			
-			
+			var fileDetailsVO:FileDetailsVO;
 			for (var j:int = 0; j < xml.file.length(); j++) 
 			{
-				trace("create file: " + xml.file[j].@name);
-				url = xml.file[j].@url;
-				trace("URL = ", url);
+				//trace("create file: " + xml.file[j].@name);
+				//url = xml.file[j].@url;
+				//trace("URL = ", url);
+				fileDetailsVO = new FileDetailsVO();
+				fileDetailsVO.dir = _directory + currPath;
+				fileDetailsVO.name = xml.file[j].@name;
+				fileDetailsVO.url = xml.file[j].@url;
+				fileDetailsVO.file_content = xml.file[j].text();
 				
-				fileCreatorService.init(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
+				fileCreatorService.init(fileDetailsVO);
+				//fileCreatorService.init(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
 				eventDispatcher.addEventListener(FileEvent.FILE_CREATED, onFileCreated);
 			}
 			

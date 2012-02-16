@@ -3,7 +3,7 @@ package com.structurecreator.services
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.files.FileTypes;
-	import com.structurecreator.model.files.MicrosoftXModel;
+	import com.structurecreator.services.vo.FileDetailsVO;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -40,16 +40,17 @@ package com.structurecreator.services
 		
 		public function FileCreateService()
 		{
-			super();
+			//super();
 		}
 		
-		public function init(dir:String, name:String = '', url:String = '', file_content:String = ''):void
+		//public function init(dir:String, name:String = '', url:String = '', file_content:String = ''):void
+		public function init(fileDetailsVO:FileDetailsVO):void
 		{
-			_dir = dir;
-			_url = url;
+			_dir = fileDetailsVO.dir;
+			_url = fileDetailsVO.url;
 			
-			_name = customVarsModel.updateVariablesInStr(name);
-			_file_content = file_content;
+			_name = customVarsModel.updateVariablesInStr(fileDetailsVO.name);
+			_file_content = fileDetailsVO.file_content;
 			
 			_file_ext = (_name.substr(_name.lastIndexOf('.') + 1) as String).toLowerCase();
 			

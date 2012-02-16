@@ -5,7 +5,6 @@ package com.structurecreator
 	import com.structurecreator.model.ProjectFolderModel;
 	import com.structurecreator.model.SchemaModel;
 	import com.structurecreator.model.StructureCreatorModel;
-	import com.structurecreator.model.files.MicrosoftXModel;
 	import com.structurecreator.model.schemas.XMLSchema;
 	import com.structurecreator.services.FileCreateService;
 	import com.structurecreator.services.MicrosoftXFileService;

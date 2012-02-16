@@ -4,6 +4,7 @@ package com.structurecreator.events
 	
 	public class FileEvent extends Event
 	{
+		public static const START_CREATION:String = 'startCreation';
 		public static const FILE_CREATED:String = 'fileCreated';
 		
 		public function FileEvent(type:String)

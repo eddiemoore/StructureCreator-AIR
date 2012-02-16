@@ -17,7 +17,7 @@ package com.structurecreator.controller
 		
 		override public function execute():void
 		{
-			service.init(
+			
 		}
 	}
 }
