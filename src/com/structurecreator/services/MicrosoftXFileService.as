@@ -1,26 +1,35 @@
-package com.structurecreator.model.files
+package com.structurecreator.services
 {
-	//import com.structurecreator.air.CustomVars;
-	//import com.structurecreator.customvars.CustomVariables;
 	import com.structurecreator.events.FileEvent;
+	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.files.FileTypes;
-	import flash.events.EventDispatcher;
-	import flash.utils.ByteArray;
+	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
-	import nochump.util.zip.*;
-	/**
-	 * ...
-	 * @author Ed Moore
-	 */
-	public class MicrosoftXModel extends EventDispatcher
+	import flash.utils.ByteArray;
+	
+	import nochump.util.zip.ZipEntry;
+	import nochump.util.zip.ZipFile;
+	import nochump.util.zip.ZipOutput;
+	
+	import org.robotlegs.mvcs.Actor;
+	
+	public class MicrosoftXFileService extends Actor
 	{
 		private var _outputFile:File;
 		private var _docx:ZipFile;
 		private var _bytes:ByteArray;
 		
-		public function MicrosoftXModel(file:File, bytes:ByteArray) 
+		[Inject]
+		public var model:CustomVariableModel;
+		
+		public function MicrosoftXFileService()
+		{
+			//super();
+		}
+		
+		public function init(file:File, bytes:ByteArray):void
 		{
 			_outputFile = file;
 			_bytes = bytes;
@@ -49,7 +58,7 @@ package com.structurecreator.model.files
 					{
 						//text file
 						fileContent = _docx.getInput(zipEntry).toString();
-						fileContent = fileContent; //CustomVariables.getInstance().updateVars(fileContent);						
+						fileContent = model.updateVariablesInStr(fileContent);						
 						
 						fileData = new ByteArray();
 						fileData.writeUTFBytes(fileContent);
@@ -85,8 +94,7 @@ package com.structurecreator.model.files
 			_bytes = null;
 			_docx = null;
 			
-			dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));
+			eventDispatcher.dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));
 		}
-		
 	}
 }

@@ -3,6 +3,7 @@ package com.structurecreator.services
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.files.FileTypes;
+	import com.structurecreator.model.files.MicrosoftXModel;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -33,6 +34,9 @@ package com.structurecreator.services
 		
 		[Inject]
 		public var customVarsModel:CustomVariableModel;
+		
+		[Inject]
+		public var microsoftX:MicrosoftXFileService;
 		
 		public function FileCreateService()
 		{
@@ -104,6 +108,7 @@ package com.structurecreator.services
 				case 'xlsx':
 					//trace("WRITE A MICROSOFT FILE : " + _file_ext);
 					//var mx:MicrosoftXModel = new MicrosoftXModel(file, _byte_content);
+					microsoftX.init(file, _byte_content);
 					//mx.addEventListener(FileEvent.FILE_CREATED, mx_fileCreated);
 					break;
 				
@@ -118,11 +123,11 @@ package com.structurecreator.services
 			}
 		}
 		
-		private function mx_fileCreated(e:FileEvent):void 
+		/*private function mx_fileCreated(e:FileEvent):void 
 		{
 			//(e.currentTarget as MicrosoftX).removeEventListener(FileEvent.FILE_CREATED, mx_fileCreated);
 			complete();
-		}
+		}*/
 		
 		/**
 		 * Text Based File
@@ -151,8 +156,8 @@ package com.structurecreator.services
 		
 		private function textFileLoaded(e:Event):void
 		{
-			_urlLoader.removeEventListener(Event.COMPLETE, textFileLoaded);
-			_urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
+			//_urlLoader.removeEventListener(Event.COMPLETE, textFileLoaded);
+			//_urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
 			trace("File contents LOADED for " + _name);
 			_file_content = e.currentTarget.data as String;
 			createTextFile();
