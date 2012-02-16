@@ -15,6 +15,7 @@ package com.structurecreator.model.schemas
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
+	import org.robotlegs.base.CommandMap;
 	import org.robotlegs.mvcs.Actor;
 	
 	public class XMLSchema extends Actor
@@ -89,6 +90,7 @@ package com.structurecreator.model.schemas
 			var file:File;
 			//var url:String;
 			//var fc:FileCreatorModel;
+			eventDispatcher.addEventListener(FileEvent.FILE_CREATED, onFileCreated);
 			
 			var fileDetailsVO:FileDetailsVO;
 			for (var j:int = 0; j < xml.file.length(); j++) 
@@ -102,9 +104,7 @@ package com.structurecreator.model.schemas
 				fileDetailsVO.url = xml.file[j].@url;
 				fileDetailsVO.file_content = xml.file[j].text();
 				
-				fileCreatorService.init(fileDetailsVO);
-				//fileCreatorService.init(_directory + currPath, xml.file[j].@name, url, xml.file[j].text());
-				eventDispatcher.addEventListener(FileEvent.FILE_CREATED, onFileCreated);
+				dispatch(new FileEvent(FileEvent.START_CREATION, fileDetailsVO));
 			}
 			
 			//FOLDERS

@@ -1,5 +1,6 @@
 package com.structurecreator.controller
 {
+	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.services.FileCreateService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -7,8 +8,10 @@ package com.structurecreator.controller
 	public class FileCommand extends Command
 	{
 		[Inject]
-		public var service:FileCreateService;
+		public var event:FileEvent;
 		
+		[Inject]
+		public var service:FileCreateService;
 		
 		public function FileCommand()
 		{
@@ -17,7 +20,7 @@ package com.structurecreator.controller
 		
 		override public function execute():void
 		{
-			
+			service.init(event.fileDeatailsVO);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.structurecreator
 {
+	import com.structurecreator.controller.FileCommand;
+	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
 	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.ProjectFolderModel;
@@ -51,6 +53,8 @@ package com.structurecreator
 			mediatorMap.mapView(CreateButton, CreateButtonMediator);
 			mediatorMap.mapView(CustomVariablesView, CustomVariablesMediator);
 			mediatorMap.mapView(CustomVariableBarView, CustomVariableBarMediator);
+			
+			commandMap.mapEvent(FileEvent.START_CREATION, FileCommand, FileEvent);
 			
 			eventDispatcher.addEventListener(StructureCreatorEvent.CREATION_COMPLETE, onCreationComplete);
 			
