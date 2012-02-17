@@ -1,5 +1,6 @@
 package com.structurecreator
 {
+	import com.structurecreator.controller.DatabaseCommand;
 	import com.structurecreator.controller.FileCommand;
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
@@ -8,6 +9,7 @@ package com.structurecreator
 	import com.structurecreator.model.SchemaModel;
 	import com.structurecreator.model.StructureCreatorModel;
 	import com.structurecreator.model.schemas.XMLSchema;
+	import com.structurecreator.services.DatabaseService;
 	import com.structurecreator.services.FileCreateService;
 	import com.structurecreator.services.MicrosoftXFileService;
 	import com.structurecreator.view.CreateButton;
@@ -42,6 +44,7 @@ package com.structurecreator
 			injector.mapSingleton(XMLSchema);
 			injector.mapSingleton(StructureCreatorModel);
 			injector.mapSingleton(CustomVariableModel);
+			injector.mapSingleton(DatabaseService);
 			
 			injector.mapClass(FileCreateService, FileCreateService);
 			//var fcs:FileCreateService = injector.getInstance(FileCreateService);
@@ -55,8 +58,11 @@ package com.structurecreator
 			mediatorMap.mapView(CustomVariableBarView, CustomVariableBarMediator);
 			
 			commandMap.mapEvent(FileEvent.START_CREATION, FileCommand, FileEvent);
+			commandMap.mapEvent(StructureCreatorEvent.APP_STARTED, DatabaseCommand, StructureCreatorEvent);
 			
 			eventDispatcher.addEventListener(StructureCreatorEvent.CREATION_COMPLETE, onCreationComplete);
+			
+			eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.APP_STARTED));
 			
 			super.startup();
 		}
