@@ -28,6 +28,9 @@ package com.structurecreator.services
 			
 		}
 		
+		/**
+		 * Initialise creation on database
+		 */
 		public function createDB():void
 		{
 			_dbFile = File.documentsDirectory.resolvePath('StructureCreator.db');
@@ -48,12 +51,18 @@ package com.structurecreator.services
 			execute();
 		}
 		
+		/**
+		 * Insert a new profile into database
+		 */
 		public function addProfile(name:String = ''):void
 		{
 			addStatement("INSERT INTO profiles (name) SELECT '" + name +"' WHERE NOT EXISTS (SELECT 1 FROM profiles WHERE name = '" + name + "');");
 			execute();
 		}
 		
+		/**
+		 * Update a profile with new schema file
+		 */
 		public function updateProfile(id:int, schema_file:String = ''):void
 		{
 			currentProfileId = id;
@@ -61,6 +70,9 @@ package com.structurecreator.services
 			execute();
 		}
 		
+		/**
+		 * Find and return profile given ID
+		 */
 		public function selectProfile(id:int):Array
 		{
 			currentProfileId = id;
@@ -69,6 +81,9 @@ package com.structurecreator.services
 			return _statement.getResult().data;
 		}
 		
+		/**
+		 * Return all profiles from database
+		 */
 		public function selectAllProfiles():Array
 		{
 			addStatement("SELECT * from profiles");
@@ -76,6 +91,9 @@ package com.structurecreator.services
 			return _statement.getResult().data;
 		}
 		
+		/**
+		 * Adds custom variables to database given profile id
+		 */
 		public function addCustomVars(profile_id:int):void
 		{
 			var item:CustomVariableVO;
@@ -90,6 +108,9 @@ package com.structurecreator.services
 			execute();
 		}
 		
+		/**
+		 * Return all custom variables given profile ID
+		 */ 
 		public function selectAllCustomVars(profile_id:int):Array
 		{
 			addStatement("SELECT * from customvars WHERE profile_id='" + profile_id + "';");
@@ -97,6 +118,9 @@ package com.structurecreator.services
 			return _statement.getResult().data;
 		}
 		
+		/**
+		 * Executes all statements
+		 */
 		private function execute():void 
 		{
 			if (_statements.length > 0)
@@ -108,11 +132,17 @@ package com.structurecreator.services
 			}
 		}
 		
+		/**
+		 * Add new statement to array.
+		 */
 		private function addStatement(statement:String):void
 		{
 			_statements.push(statement);
 		}
 		
+		/**
+		 * On database ready check to see if there are any pending statements and execute them
+		 */
 		private function onDatabaseReady(e:Event):void 
 		{
 			trace('database ready');

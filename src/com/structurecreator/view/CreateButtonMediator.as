@@ -25,6 +25,9 @@ package com.structurecreator.view
 			eventMap.mapListener(view, MouseEvent.CLICK, onClick);
 		}
 		
+		/**
+		 * On Click call to start the creation of the project
+		 */
 		protected function onClick(event:MouseEvent):void
 		{
 			trace("Clicked");

@@ -26,9 +26,11 @@ package com.structurecreator.services
 		
 		public function MicrosoftXFileService()
 		{
-			//super();
 		}
 		
+		/**
+		 * Initalise file with byte content
+		 */
 		public function init(file:File, bytes:ByteArray):void
 		{
 			_outputFile = file;
@@ -37,6 +39,9 @@ package com.structurecreator.services
 			readDocx();
 		}
 		
+		/**
+		 * Read office doc file
+		 */
 		private function readDocx():void
 		{
 			_docx = new ZipFile(_bytes);
@@ -88,6 +93,9 @@ package com.structurecreator.services
 			complete();
 		}
 		
+		/**
+		 * On creation complete dispatch that creation is complete
+		 */
 		private function complete():void 
 		{
 			_outputFile = null;

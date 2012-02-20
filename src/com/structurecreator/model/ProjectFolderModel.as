@@ -21,12 +21,18 @@ package com.structurecreator.model
 			return _projectFolder;
 		}
 		
+		/**
+		 * Opens dialog to select project directory
+		 */
 		public function selectProjectFolder():void
 		{
 			projectFolder.browseForDirectory("Select Project Folder");
 			projectFolder.addEventListener(Event.SELECT, onProjectFolderSelected);
 		}
 		
+		/**
+		 * On project folder select dispatch the event to the event dispather
+		 */
 		protected function onProjectFolderSelected(event:Event):void
 		{
 			eventDispatcher.dispatchEvent(new ProjectFolderEvent(ProjectFolderEvent.PROJECT_FOLDER_SELECTED));

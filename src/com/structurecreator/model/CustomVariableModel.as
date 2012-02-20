@@ -14,11 +14,17 @@ package com.structurecreator.model
 			
 		}
 		
+		/**
+		 * returns all the current custom variables
+		 */
 		public function get customVars():Vector.<CustomVariableVO>
 		{
 			return _customVars;
 		}
 		
+		/**
+		 * Updates variable and value given it's ID
+		 */
 		public function updateVariableById(id:uint, variable:String='', value:String=''):void
 		{
 			customVars[id].variable = variable;
@@ -26,6 +32,9 @@ package com.structurecreator.model
 			trace(customVars[id].variable, customVars[id].value);
 		}
 		
+		/**
+		 * Uses RegEx to search through a given string and update any variables from the custom vars vector
+		 */
 		public function updateVariablesInStr(str:String=''):String
 		{
 			var vo:CustomVariableVO;
@@ -39,6 +48,9 @@ package com.structurecreator.model
 			return str;
 		}
 		
+		/**
+		 * Adds a new custom variable to the custom variables vector
+		 */
 		public function addCustomVariable():void
 		{
 			trace("Add a custom variable");

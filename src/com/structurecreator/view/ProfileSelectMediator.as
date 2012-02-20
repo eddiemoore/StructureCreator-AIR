@@ -20,6 +20,9 @@ package com.structurecreator.view
 			eventMap.mapListener(view, Event.CHANGE, onChange);
 		}
 		
+		/**
+		 * On profile combobox change update everything
+		 */
 		protected function onChange(event:IndexChangeEvent):void
 		{
 			trace("Profile Select Box Change");

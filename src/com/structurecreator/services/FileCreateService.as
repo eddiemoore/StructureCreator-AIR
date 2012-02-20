@@ -40,10 +40,11 @@ package com.structurecreator.services
 		
 		public function FileCreateService()
 		{
-			//super();
 		}
 		
-		//public function init(dir:String, name:String = '', url:String = '', file_content:String = ''):void
+		/**
+		 * Initialise file creation from fileDetailsVO
+		 */
 		public function init(fileDetailsVO:FileDetailsVO):void
 		{
 			_dir = fileDetailsVO.dir;
@@ -61,6 +62,7 @@ package com.structurecreator.services
 			}
 			else if (FileTypes.NON_TEXT_EXT_ARRAY.indexOf(_file_ext) > -1)
 			{
+				//Non text based file
 				loadByteFile();
 			} 
 			else
@@ -70,6 +72,9 @@ package com.structurecreator.services
 			}
 		}
 		
+		/**
+		 * Load byte file from URL
+		 */
 		private function loadByteFile():void
 		{
 			_loader = new URLStream();
@@ -80,11 +85,17 @@ package com.structurecreator.services
 			_loader.load(new URLRequest(_url));
 		}
 		
+		/**
+		 * Byte File IO Error
+		 */
 		private function byteFileIOError(e:IOErrorEvent):void 
 		{
 			trace("CANNOT LOAD " + _name);
 		}
 		
+		/**
+		 * On byte file loaded
+		 */
 		private function byteFileLoaded(e:Event):void 
 		{
 			_loader.removeEventListener(Event.COMPLETE, byteFileLoaded);
@@ -95,6 +106,9 @@ package com.structurecreator.services
 			createByteFile();
 		}
 		
+		/**
+		 * Create byte file
+		 */
 		private function createByteFile():void
 		{
 			var file:File = new File();
@@ -104,15 +118,15 @@ package com.structurecreator.services
 			trace('the file ext : ' + _file_ext);
 			switch (_file_ext) 
 			{
+				//If file is a Microsoft office doc.
 				case 'docx':
 				case 'pptx':
 				case 'xlsx':
-					//trace("WRITE A MICROSOFT FILE : " + _file_ext);
 					//var mx:MicrosoftXModel = new MicrosoftXModel(file, _byte_content);
 					microsoftX.init(file, _byte_content);
 					//mx.addEventListener(FileEvent.FILE_CREATED, mx_fileCreated);
 					break;
-				
+				//All other byte files
 				default:
 					var fs:FileStream = new FileStream();
 					fs.open(file, FileMode.WRITE);
@@ -131,7 +145,7 @@ package com.structurecreator.services
 		}*/
 		
 		/**
-		 * Text Based File
+		 * Text Based File Load
 		 */
 		private function loadTextFileContent():void
 		{
@@ -143,11 +157,17 @@ package com.structurecreator.services
 			_urlLoader.load(new URLRequest(_url));
 		}
 		
+		/**
+		 * Loader Progress
+		 */
 		private function urlLoader_progress(e:ProgressEvent):void 
 		{
 			trace(e.bytesLoaded / e.bytesTotal);
 		}
 		
+		/**
+		 * Load IO Error
+		 */
 		private function onIOError(e:IOErrorEvent):void 
 		{
 			trace("Error loading text file");
@@ -155,6 +175,9 @@ package com.structurecreator.services
 			complete();
 		}
 		
+		/**
+		 * Text based file loaded
+		 */
 		private function textFileLoaded(e:Event):void
 		{
 			//_urlLoader.removeEventListener(Event.COMPLETE, textFileLoaded);
@@ -164,6 +187,9 @@ package com.structurecreator.services
 			createTextFile();
 		}
 		
+		/**
+		 * Create text based file
+		 */
 		private function createTextFile():void
 		{
 			_file_content = customVarsModel.updateVariablesInStr(_file_content);
@@ -181,18 +207,25 @@ package com.structurecreator.services
 			complete();
 		}
 		
+		/**
+		 * On Creation complete
+		 */
 		private function complete():void 
 		{
 			trace(_name, 'created');
 			_loader = null;
 			_urlLoader = null;
 			
+			//Timer to add a slight delay for files created from xml text content
 			var t:Timer = new Timer(100,1);
 			t.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
 			t.start();
 			//dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));
 		}
 		
+		/**
+		 * Dispatch event that file has been created
+		 */
 		protected function onTimerComplete(event:TimerEvent):void
 		{
 			eventDispatcher.dispatchEvent(new FileEvent(FileEvent.FILE_CREATED));

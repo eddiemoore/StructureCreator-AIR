@@ -2,6 +2,8 @@ package com.structurecreator.model.files
 {
 	public class FileTypes
 	{
+		// Array of non text files
+		// TODO change to Vector.<String>
 		public static const NON_TEXT_EXT_ARRAY :Array =	[
 			'png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff', 'bmp', 'dds', 'pdn', 'pict', 'pct', 'psd', 'pdd', 'psp', 'pxr', 'raw', //IMAGE FILES
 			'tga', 'targa', 'icb', 'vda', 'vst', 'pix', 'xbm', 'xcf', 'xpm',

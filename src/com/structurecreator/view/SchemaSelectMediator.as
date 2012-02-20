@@ -26,11 +26,17 @@ package com.structurecreator.view
 			eventMap.mapListener(eventDispatcher, SchemaEvent.SCHEMA_SELECTED, onSchemaSelected);
 		}
 		
+		/**
+		 * On Schema select update the display
+		 */
 		private function onSchemaSelected(e:SchemaEvent):void
 		{
 			view.schemaTI.text = model.schemaFile.nativePath;
 		}
 		
+		/**
+		 * On Click call the model to open a file select box
+		 */
 		private function onClick(e:MouseEvent):void
 		{
 			model.selectSchemaFile();

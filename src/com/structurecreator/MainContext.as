@@ -39,6 +39,7 @@ package com.structurecreator
 		override public function startup():void
 		{
 			trace("App Started");
+			/* Setup models */
 			injector.mapSingleton(ProjectFolderModel);
 			injector.mapSingleton(SchemaModel);
 			injector.mapSingleton(XMLSchema);
@@ -46,27 +47,34 @@ package com.structurecreator
 			injector.mapSingleton(CustomVariableModel);
 			injector.mapSingleton(DatabaseService);
 			
+			/* Setup File Creation Services */
 			injector.mapClass(FileCreateService, FileCreateService);
 			//var fcs:FileCreateService = injector.getInstance(FileCreateService);
 			//injector.mapValue(FileCreateService, fcs);
 			injector.mapClass(MicrosoftXFileService, MicrosoftXFileService);
 			
+			/* Map views to their mediators */
 			mediatorMap.mapView(ProjectFolderView, ProjectFolderMediator);
 			mediatorMap.mapView(SchemaSelectView, SchemaSelectMediator);
 			mediatorMap.mapView(CreateButton, CreateButtonMediator);
 			mediatorMap.mapView(CustomVariablesView, CustomVariablesMediator);
 			mediatorMap.mapView(CustomVariableBarView, CustomVariableBarMediator);
 			
+			/* Commands for file creation */
 			commandMap.mapEvent(FileEvent.START_CREATION, FileCommand, FileEvent);
 			commandMap.mapEvent(StructureCreatorEvent.APP_STARTED, DatabaseCommand, StructureCreatorEvent);
 			
+			/* Listen for creation complete event */
 			eventDispatcher.addEventListener(StructureCreatorEvent.CREATION_COMPLETE, onCreationComplete);
-			
 			eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.APP_STARTED));
 			
 			super.startup();
 		}
 		
+		/**
+		 * On Creation Complete
+		 * Show that all files have been created
+		 */
 		private function onCreationComplete(event:Event):void
 		{
 			Alert.show("All the files and folders have been created.", "All Done!");

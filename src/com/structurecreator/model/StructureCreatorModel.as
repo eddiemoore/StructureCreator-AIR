@@ -21,6 +21,10 @@ package com.structurecreator.model
 			
 		}
 		
+		/**
+		 * Starts inital creation of project
+		 * Decides which schema model to use
+		 */
 		public function startCreation():void
 		{
 			eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.CREATION_STARTED));

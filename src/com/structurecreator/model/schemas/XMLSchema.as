@@ -20,7 +20,6 @@ package com.structurecreator.model.schemas
 	
 	public class XMLSchema extends Actor
 	{
-		private var _xmlUrl:String = '';
 		private var _directory:String = '';
 		private var _xmlLoader:URLLoader;
 		private var _totalFolders:int;
@@ -39,9 +38,11 @@ package com.structurecreator.model.schemas
 			
 		}
 		
+		/**
+		 * Starts initail creation from xml schema
+		 */
 		public function start (schema_xml:String, directory:String):void
 		{
-			_xmlUrl = schema_xml;
 			_directory = directory;
 			
 			_totalFiles = 0;
@@ -49,18 +50,24 @@ package com.structurecreator.model.schemas
 			_filesCreated = 0;
 			_foldersCreated = 0;
 			
-			loadSchemaXml();
+			loadSchemaXml(schema_xml);
 		}
 		
-		private function loadSchemaXml():void 
+		/**
+		 * Sets up loader and starts loading of xml
+		 */
+		private function loadSchemaXml(url:String=''):void 
 		{
 			_xmlLoader = new URLLoader();
 			_xmlLoader.addEventListener(Event.COMPLETE, hComplete);
 			_xmlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, secError);
 			_xmlLoader.addEventListener(IOErrorEvent.IO_ERROR, hError);
-			_xmlLoader.load(new URLRequest(_xmlUrl));
+			_xmlLoader.load(new URLRequest(url));
 		}
 		
+		/**
+		 * On xml load complete find total files and folders and start creation
+		 */
 		private function hComplete(e:Event):void 
 		{
 			trace("XML Load Complete");
@@ -84,20 +91,13 @@ package com.structurecreator.model.schemas
 		{
 			var currPath:String = path;
 			
-			//CaptainsLog.getInstance().addToLog(currPath);
-			
-			//FILES
-			var file:File;
-			//var url:String;
-			//var fc:FileCreatorModel;
+			//listen for file creation event
 			eventDispatcher.addEventListener(FileEvent.FILE_CREATED, onFileCreated);
 			
 			var fileDetailsVO:FileDetailsVO;
 			for (var j:int = 0; j < xml.file.length(); j++) 
 			{
-				//trace("create file: " + xml.file[j].@name);
-				//url = xml.file[j].@url;
-				//trace("URL = ", url);
+				//Setup new file details value object
 				fileDetailsVO = new FileDetailsVO();
 				fileDetailsVO.dir = _directory + currPath;
 				fileDetailsVO.name = xml.file[j].@name;
@@ -127,17 +127,23 @@ package com.structurecreator.model.schemas
 			}
 			trace("Files : " + _filesCreated + '/' + _totalFiles);
 			trace("Folders : " + _foldersCreated + '/' + _totalFolders);
-			if (_filesCreated >= _totalFiles && _foldersCreated >= _totalFolders)
-			{
-				trace("Created Everything");
-				eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.CREATION_COMPLETE));
-				cleanUp();
-			}
+			allDone();
 		}
 		
+		/**
+		 * On file creation complete add 1 to files created and run check to see if creation is complete
+		 */
 		private function onFileCreated(e:FileEvent):void 
 		{
 			_filesCreated += 1;
+			allDone();
+		}
+		
+		/**
+		 * Checks to see if all files and folders have been created
+		 */
+		private function allDone():void
+		{
 			trace(_filesCreated, '/', _totalFiles);
 			if (_filesCreated >= _totalFiles && _foldersCreated >= _totalFolders)
 			{
@@ -147,16 +153,26 @@ package com.structurecreator.model.schemas
 			}
 		}
 		
+		/**
+		 * Clears up variables and listeners
+		 */
 		private function cleanUp():void 
 		{
 			_xmlLoader = null;
+			_directory = '';
 		}
 		
+		/**
+		 * On Security Error
+		 */
 		private function secError(e:SecurityErrorEvent):void 
 		{
 			trace("security error: " + e);
 		}
 		
+		/**
+		 * On IO Error
+		 */
 		private function hError(e:IOErrorEvent):void 
 		{
 			trace("Error: " + e);

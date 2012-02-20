@@ -18,6 +18,9 @@ package com.structurecreator.controller
 			
 		}
 		
+		/**
+		 * Initialises the creation of a new file
+		 */
 		override public function execute():void
 		{
 			service.init(event.fileDeatailsVO);

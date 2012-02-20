@@ -28,6 +28,9 @@ package com.structurecreator.view
 			eventMap.mapListener(eventDispatcher, CustomVarsEvent.CUSTOM_VAR_ADDED, onCustomVarAdded); 
 		}
 		
+		/**
+		 * Custom variable added so update the view
+		 */
 		private function onCustomVarAdded(e:CustomVarsEvent):void
 		{
 			//trace("Added Custom Variable");
@@ -36,6 +39,9 @@ package com.structurecreator.view
 			view.customVarsHolder.addElement(cvb);
 		}
 		
+		/**
+		 * Call to the model to add a custom variable
+		 */
 		private function addCustomVariable(e:MouseEvent):void
 		{
 			model.addCustomVariable();

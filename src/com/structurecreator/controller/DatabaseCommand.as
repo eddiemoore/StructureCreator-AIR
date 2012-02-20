@@ -17,7 +17,8 @@ package com.structurecreator.controller
 		{
 			
 		}
-		
+		/**
+		 * Initialises creation of the database */
 		override public function execute():void
 		{
 			service.createDB();

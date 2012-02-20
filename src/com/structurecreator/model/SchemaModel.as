@@ -21,12 +21,18 @@ package com.structurecreator.model
 			return _schemaFile;
 		}
 		
+		/**
+		 * Open file select to select schema file
+		 */
 		public function selectSchemaFile():void
 		{
 			schemaFile.browse();
 			schemaFile.addEventListener(Event.SELECT, onSchemaSelected);
 		}
 		
+		/**
+		 * On select dispatch the event to the event dispatcher
+		 */
 		protected function onSchemaSelected(event:Event):void
 		{
 			eventDispatcher.dispatchEvent(new SchemaEvent(SchemaEvent.SCHEMA_SELECTED));
