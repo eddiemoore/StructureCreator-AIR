@@ -2,7 +2,9 @@ package com.structurecreator
 {
 	import com.structurecreator.controller.DatabaseCommand;
 	import com.structurecreator.controller.FileCommand;
+	import com.structurecreator.controller.ProfileCommand;
 	import com.structurecreator.events.FileEvent;
+	import com.structurecreator.events.ProfileEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
 	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.ProjectFolderModel;
@@ -16,12 +18,16 @@ package com.structurecreator
 	import com.structurecreator.view.CreateButtonMediator;
 	import com.structurecreator.view.CustomVariablesMediator;
 	import com.structurecreator.view.CustomVariablesView;
+	import com.structurecreator.view.ProfileButtons;
+	import com.structurecreator.view.ProfileButtonsMediator;
 	import com.structurecreator.view.ProjectFolderMediator;
 	import com.structurecreator.view.ProjectFolderView;
 	import com.structurecreator.view.SchemaSelectMediator;
 	import com.structurecreator.view.SchemaSelectView;
 	import com.structurecreator.view.customvars.CustomVariableBarMediator;
 	import com.structurecreator.view.customvars.CustomVariableBarView;
+	import com.structurecreator.view.saveprofile.SaveProfileWindow;
+	import com.structurecreator.view.saveprofile.SaveProfileWindowMediator;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
@@ -59,16 +65,28 @@ package com.structurecreator
 			mediatorMap.mapView(CreateButton, CreateButtonMediator);
 			mediatorMap.mapView(CustomVariablesView, CustomVariablesMediator);
 			mediatorMap.mapView(CustomVariableBarView, CustomVariableBarMediator);
+			mediatorMap.mapView(ProfileButtons, ProfileButtonsMediator);
+			mediatorMap.mapView(SaveProfileWindow, SaveProfileWindowMediator);
 			
 			/* Commands for file creation */
 			commandMap.mapEvent(FileEvent.START_CREATION, FileCommand, FileEvent);
 			commandMap.mapEvent(StructureCreatorEvent.APP_STARTED, DatabaseCommand, StructureCreatorEvent);
+			commandMap.mapEvent(ProfileEvent.SAVE_PROFILE, ProfileCommand, ProfileEvent);
 			
 			/* Listen for creation complete event */
 			eventDispatcher.addEventListener(StructureCreatorEvent.CREATION_COMPLETE, onCreationComplete);
 			eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.APP_STARTED));
+			eventDispatcher.addEventListener(ProfileEvent.OPEN_SAVE_WINDOW, onSaveProfile);
 			
 			super.startup();
+		}
+		
+		private function onSaveProfile(e:ProfileEvent):void
+		{
+			//TODO open save profile box.
+			var _viewport:SaveProfileWindow = new SaveProfileWindow();
+			//mediatorMap.createMediator(_viewport);
+			_viewport.open();
 		}
 		
 		/**

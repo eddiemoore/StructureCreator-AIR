@@ -57,6 +57,7 @@ package com.structurecreator.services
 		public function addProfile(name:String = ''):void
 		{
 			addStatement("INSERT INTO profiles (name) SELECT '" + name +"' WHERE NOT EXISTS (SELECT 1 FROM profiles WHERE name = '" + name + "');");
+			trace("Add Profile " + name);
 			execute();
 		}
 		

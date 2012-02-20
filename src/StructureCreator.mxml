@@ -17,6 +17,8 @@
 	
 	<s:Label color="#CFCECD" fontSize="20" text="StructureCreator 0.1"/>
 	
+	<view:ProfileButtons />
+	
 	<!-- Profile Select -->
 	<s:Group width="100%">
 		<s:layout>
