@@ -1,5 +1,8 @@
 package com.structurecreator.view
 {
+	import com.structurecreator.events.DatabaseEvent;
+	import com.structurecreator.services.DatabaseService;
+	
 	import flash.events.Event;
 	
 	import org.robotlegs.mvcs.Mediator;
@@ -11,6 +14,9 @@ package com.structurecreator.view
 		[Inject]
 		public var view:ProfileSelect;
 		
+		[Inject]
+		public var model:DatabaseService;
+		
 		public function ProfileSelectMediator()
 		{
 		}
@@ -18,6 +24,12 @@ package com.structurecreator.view
 		override public function onRegister():void
 		{
 			eventMap.mapListener(view, Event.CHANGE, onChange);
+			eventDispatcher.addEventListener(DatabaseEvent.DATABASE_UPDATED, onDatabaseUpdated);
+		}
+		
+		private function onDatabaseUpdated(e:DatabaseEvent):void
+		{
+			
 		}
 		
 		/**

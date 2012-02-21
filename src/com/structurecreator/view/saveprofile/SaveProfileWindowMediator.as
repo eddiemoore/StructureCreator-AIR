@@ -8,7 +8,7 @@ package com.structurecreator.view.saveprofile
 	
 	public class SaveProfileWindowMediator extends Mediator
 	{
-		[Iinject]
+		[Inject]
 		public var view:SaveProfileWindow;
 		
 		public function SaveProfileWindowMediator()
@@ -18,6 +18,7 @@ package com.structurecreator.view.saveprofile
 		
 		override public function onRegister():void
 		{
+			trace("Save Profile Window registered");
 			view.saveBtn.addEventListener(MouseEvent.CLICK, onSaveClick);
 		}
 		

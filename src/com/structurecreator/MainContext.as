@@ -85,8 +85,10 @@ package com.structurecreator
 		{
 			//TODO open save profile box.
 			var _viewport:SaveProfileWindow = new SaveProfileWindow();
-			//mediatorMap.createMediator(_viewport);
+			//
 			_viewport.open();
+			
+			mediatorMap.createMediator(_viewport);
 		}
 		
 		/**

@@ -1,5 +1,6 @@
 package com.structurecreator.services
 {
+	import com.structurecreator.events.DatabaseEvent;
 	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.vo.CustomVariableVO;
 	
@@ -59,6 +60,7 @@ package com.structurecreator.services
 			addStatement("INSERT INTO profiles (name) SELECT '" + name +"' WHERE NOT EXISTS (SELECT 1 FROM profiles WHERE name = '" + name + "');");
 			trace("Add Profile " + name);
 			execute();
+			eventDispatcher.dispatchEvent(new DatabaseEvent(DatabaseEvent.DATABASE_UPDATED));
 		}
 		
 		/**
@@ -69,6 +71,7 @@ package com.structurecreator.services
 			currentProfileId = id;
 			addStatement("UPDATE profiles SET schema_file='" + schema_file + "' WHERE profile_id='" + id + "';");
 			execute();
+			eventDispatcher.dispatchEvent(new DatabaseEvent(DatabaseEvent.DATABASE_UPDATED));
 		}
 		
 		/**
@@ -107,6 +110,7 @@ package com.structurecreator.services
 			}
 			
 			execute();
+			eventDispatcher.dispatchEvent(new DatabaseEvent(DatabaseEvent.DATABASE_UPDATED));
 		}
 		
 		/**
