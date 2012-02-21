@@ -20,6 +20,8 @@ package com.structurecreator
 	import com.structurecreator.view.CustomVariablesView;
 	import com.structurecreator.view.ProfileButtons;
 	import com.structurecreator.view.ProfileButtonsMediator;
+	import com.structurecreator.view.ProfileSelect;
+	import com.structurecreator.view.ProfileSelectMediator;
 	import com.structurecreator.view.ProjectFolderMediator;
 	import com.structurecreator.view.ProjectFolderView;
 	import com.structurecreator.view.SchemaSelectMediator;
@@ -60,6 +62,7 @@ package com.structurecreator
 			injector.mapClass(MicrosoftXFileService, MicrosoftXFileService);
 			
 			/* Map views to their mediators */
+			mediatorMap.mapView(ProfileSelect, ProfileSelectMediator);
 			mediatorMap.mapView(ProjectFolderView, ProjectFolderMediator);
 			mediatorMap.mapView(SchemaSelectView, SchemaSelectMediator);
 			mediatorMap.mapView(CreateButton, CreateButtonMediator);
