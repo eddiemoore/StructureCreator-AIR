@@ -44,18 +44,22 @@ package com.structurecreator.view
 		{
 			var profiles:Array = model.selectAllProfiles();
 			//trace(profiles[0].name);
-			
-			if (profiles.length > 0)
+			provider = new ArrayCollection();
+			if (profiles && profiles.length > 0)
+			{
 				view.enabled = true;
+				
+							
+				//provider = new ArrayCollection();
+				for (var i:uint = 0; i < profiles.length; i++)
+				{
+					trace(profiles[i].name);
+					provider.addItem( { label:profiles[i].name, data:profiles[i].profile_id } );
+				}
+			}
 			else
 				view.enabled = false;
 			
-			provider = new ArrayCollection();
-			for (var i:uint = 0; i < profiles.length; i++)
-			{
-				trace(profiles[i].name);
-				provider.addItem( { label:profiles[i].name, data:profiles[i].profile_id } );
-			}
 			view.dataProvider = provider;
 		}
 		

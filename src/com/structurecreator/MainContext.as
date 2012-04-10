@@ -35,11 +35,15 @@ package com.structurecreator
 	import flash.events.Event;
 	
 	import mx.controls.Alert;
+	import mx.core.IFlexDisplayObject;
+	import mx.managers.PopUpManager;
 	
 	import org.robotlegs.mvcs.Context;
 	
 	public class MainContext extends Context
 	{
+
+		private var _saveProfileWindow:SaveProfileWindow;
 		public function MainContext()
 		{
 		}
@@ -79,19 +83,28 @@ package com.structurecreator
 			/* Listen for creation complete event */
 			eventDispatcher.addEventListener(StructureCreatorEvent.CREATION_COMPLETE, onCreationComplete);
 			eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.APP_STARTED));
-			eventDispatcher.addEventListener(ProfileEvent.OPEN_SAVE_WINDOW, onSaveProfile);
+			eventDispatcher.addEventListener(ProfileEvent.OPEN_SAVE_WINDOW, onOpenSaveProfile);
+			eventDispatcher.addEventListener(ProfileEvent.SAVE_PROFILE, onSaveProfile);
 			
 			super.startup();
 		}
 		
-		private function onSaveProfile(e:ProfileEvent):void
+		private function onOpenSaveProfile(e:ProfileEvent):void
 		{
 			//TODO open save profile box.
-			var _viewport:SaveProfileWindow = new SaveProfileWindow();
+			_saveProfileWindow = new SaveProfileWindow();
 			//
-			_viewport.open();
+			PopUpManager.addPopUp(_saveProfileWindow, _contextView, true);
+			PopUpManager.centerPopUp(_saveProfileWindow);
+			//_viewport.open();
 			
-			mediatorMap.createMediator(_viewport);
+			mediatorMap.createMediator(_saveProfileWindow);
+		}
+		
+		private function onSaveProfile(e:ProfileEvent):void
+		{
+			trace(e.currentTarget);
+			PopUpManager.removePopUp(_saveProfileWindow);
 		}
 		
 		/**

@@ -2,7 +2,9 @@ package com.structurecreator.view.saveprofile
 {
 	import com.structurecreator.events.ProfileEvent;
 	
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Keyboard;
 	
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -20,6 +22,17 @@ package com.structurecreator.view.saveprofile
 		{
 			trace("Save Profile Window registered");
 			view.saveBtn.addEventListener(MouseEvent.CLICK, onSaveClick);
+			
+			view.profile_name.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+		}
+		
+		protected function onKeyUp(event:KeyboardEvent):void
+		{
+			// TODO Auto-generated method stub
+			if (event.keyCode == Keyboard.ENTER) 
+			{
+				view.saveBtn.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+			}
 		}
 		
 		/**
