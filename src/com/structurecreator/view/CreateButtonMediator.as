@@ -10,7 +10,7 @@ package com.structurecreator.view
 	public class CreateButtonMediator extends Mediator
 	{
 		[Inject]
-		public var view:CreateButton;
+		public var view:CreateButtonView;
 		
 		[Inject]
 		public var model:StructureCreatorModel;

@@ -16,7 +16,7 @@ package com.structurecreator.view
 	public class ProfileSelectMediator extends Mediator
 	{
 		[Inject]
-		public var view:ProfileSelect;
+		public var view:ProfileSelectView;
 		
 		[Inject]
 		public var model:DatabaseService;

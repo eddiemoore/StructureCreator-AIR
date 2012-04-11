@@ -10,7 +10,7 @@ package com.structurecreator.view
 	public class ProfileButtonsMediator extends Mediator
 	{
 		[Inject]
-		public var view:ProfileButtons;
+		public var view:ProfileButtonsView;
 		
 		public function ProfileButtonsMediator()
 		{

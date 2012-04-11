@@ -15,13 +15,13 @@ package com.structurecreator
 	import com.structurecreator.services.DatabaseService;
 	import com.structurecreator.services.FileCreateService;
 	import com.structurecreator.services.MicrosoftXFileService;
-	import com.structurecreator.view.CreateButton;
+	import com.structurecreator.view.CreateButtonView;
 	import com.structurecreator.view.CreateButtonMediator;
 	import com.structurecreator.view.CustomVariablesMediator;
 	import com.structurecreator.view.CustomVariablesView;
-	import com.structurecreator.view.ProfileButtons;
+	import com.structurecreator.view.ProfileButtonsView;
 	import com.structurecreator.view.ProfileButtonsMediator;
-	import com.structurecreator.view.ProfileSelect;
+	import com.structurecreator.view.ProfileSelectView;
 	import com.structurecreator.view.ProfileSelectMediator;
 	import com.structurecreator.view.ProjectFolderMediator;
 	import com.structurecreator.view.ProjectFolderView;
@@ -67,13 +67,13 @@ package com.structurecreator
 			injector.mapClass(MicrosoftXFileService, MicrosoftXFileService);
 			
 			/* Map views to their mediators */
-			mediatorMap.mapView(ProfileSelect, ProfileSelectMediator);
+			mediatorMap.mapView(ProfileSelectView, ProfileSelectMediator);
 			mediatorMap.mapView(ProjectFolderView, ProjectFolderMediator);
 			mediatorMap.mapView(SchemaSelectView, SchemaSelectMediator);
-			mediatorMap.mapView(CreateButton, CreateButtonMediator);
+			mediatorMap.mapView(CreateButtonView, CreateButtonMediator);
 			mediatorMap.mapView(CustomVariablesView, CustomVariablesMediator);
 			mediatorMap.mapView(CustomVariableBarView, CustomVariableBarMediator);
-			mediatorMap.mapView(ProfileButtons, ProfileButtonsMediator);
+			mediatorMap.mapView(ProfileButtonsView, ProfileButtonsMediator);
 			mediatorMap.mapView(SaveProfileWindow, SaveProfileWindowMediator);
 			
 			/* Commands for file creation */
