@@ -18,6 +18,9 @@
     <application path="StructureCreator.mxml">
       <airExcludes/>
     </application>
+    <application path="SchemaCreator.mxml">
+      <airExcludes/>
+    </application>
   </applications>
   <modules/>
   <buildCSSFiles/>
