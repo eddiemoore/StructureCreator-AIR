@@ -3,6 +3,7 @@ package com.structurecreator
 	import com.structurecreator.controller.DatabaseCommand;
 	import com.structurecreator.controller.FileCommand;
 	import com.structurecreator.controller.ProfileCommand;
+	import com.structurecreator.events.CustomVarsEvent;
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.events.ProfileEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
@@ -85,8 +86,14 @@ package com.structurecreator
 			eventDispatcher.dispatchEvent(new StructureCreatorEvent(StructureCreatorEvent.APP_STARTED));
 			eventDispatcher.addEventListener(ProfileEvent.OPEN_SAVE_WINDOW, onOpenSaveProfile);
 			eventDispatcher.addEventListener(ProfileEvent.SAVE_PROFILE, onSaveProfile);
+			eventDispatcher.addEventListener(CustomVarsEvent.CANNOT_ADD_VAR, onCannotAddVar);
 			
 			super.startup();
+		}
+		
+		private function onCannotAddVar(e:CustomVarsEvent):void
+		{
+			Alert.show("You can't add a new custom variable until the previous one is filled in", "Can't add Custom Variable");
 		}
 		
 		/**
