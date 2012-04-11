@@ -89,21 +89,24 @@ package com.structurecreator
 			super.startup();
 		}
 		
+		/**
+		 * Opens Save Profile window
+		 */
 		private function onOpenSaveProfile(e:ProfileEvent):void
 		{
-			//TODO open save profile box.
 			_saveProfileWindow = new SaveProfileWindow();
-			//
+			
 			PopUpManager.addPopUp(_saveProfileWindow, _contextView, true);
 			PopUpManager.centerPopUp(_saveProfileWindow);
-			//_viewport.open();
 			
 			mediatorMap.createMediator(_saveProfileWindow);
 		}
 		
+		/**
+		 * When profile is saved Close the window
+		 */
 		private function onSaveProfile(e:ProfileEvent):void
 		{
-			trace(e.currentTarget);
 			PopUpManager.removePopUp(_saveProfileWindow);
 		}
 		

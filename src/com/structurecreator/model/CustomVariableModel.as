@@ -54,6 +54,8 @@ package com.structurecreator.model
 		public function addCustomVariable():void
 		{
 			trace("Add a custom variable");
+			//TODO check if last is empty
+			
 			var cv:CustomVariableVO = new CustomVariableVO();
 			customVars.push(cv);
 			eventDispatcher.dispatchEvent(new CustomVarsEvent(CustomVarsEvent.CUSTOM_VAR_ADDED));

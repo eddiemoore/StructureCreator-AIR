@@ -24,6 +24,8 @@ package com.structurecreator.view.saveprofile
 			view.saveBtn.addEventListener(MouseEvent.CLICK, onSaveClick);
 			
 			view.profile_name.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			
+			view.profile_name.setFocus();
 		}
 		
 		protected function onKeyUp(event:KeyboardEvent):void
