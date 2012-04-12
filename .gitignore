@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-old
-=======
 # Numerous always-ignore extensions
 *.diff
 *.err
@@ -43,4 +40,3 @@ build/buildinfo.properties
 build/config/buildinfo.properties
 
 old
->>>>>>> c2b05f9bcdf4424c1bc9477e106ec2fff2166acd
