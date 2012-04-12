@@ -1,6 +1,7 @@
 package com.schemacreator.view
 {
-	import com.schemacreator.model.FolderBrowse;
+	import com.schemacreator.events.SchemaEvent;
+	import com.schemacreator.model.SchemaModel;
 	
 	import flash.events.MouseEvent;
 	
@@ -12,7 +13,7 @@ package com.schemacreator.view
 		public var view:DirectorySelectView;
 		
 		[Inject]
-		public var model:FolderBrowse;
+		public var model:SchemaModel;
 		
 		public function DirectorySelectMediator()
 		{
@@ -21,6 +22,12 @@ package com.schemacreator.view
 		override public function onRegister():void
 		{
 			eventMap.mapListener(view.browseBtn, MouseEvent.CLICK, browseForFolder);
+			eventMap.mapListener(eventDispatcher, SchemaEvent.FOLDER_SELECTED, onFolderSelected);
+		}
+		
+		private function onFolderSelected(e:SchemaEvent):void
+		{
+			view.directoryField.text = model.projectFolder.nativePath;
 		}
 		
 		private function browseForFolder(e:MouseEvent):void

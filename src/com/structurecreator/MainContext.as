@@ -6,6 +6,7 @@ package com.structurecreator
 	import com.structurecreator.events.CustomVarsEvent;
 	import com.structurecreator.events.FileEvent;
 	import com.structurecreator.events.ProfileEvent;
+	import com.structurecreator.events.SchemaEvent;
 	import com.structurecreator.events.StructureCreatorEvent;
 	import com.structurecreator.model.CustomVariableModel;
 	import com.structurecreator.model.ProjectFolderModel;
@@ -15,14 +16,14 @@ package com.structurecreator
 	import com.structurecreator.services.DatabaseService;
 	import com.structurecreator.services.FileCreateService;
 	import com.structurecreator.services.MicrosoftXFileService;
-	import com.structurecreator.view.CreateButtonView;
 	import com.structurecreator.view.CreateButtonMediator;
+	import com.structurecreator.view.CreateButtonView;
 	import com.structurecreator.view.CustomVariablesMediator;
 	import com.structurecreator.view.CustomVariablesView;
-	import com.structurecreator.view.ProfileButtonsView;
 	import com.structurecreator.view.ProfileButtonsMediator;
-	import com.structurecreator.view.ProfileSelectView;
+	import com.structurecreator.view.ProfileButtonsView;
 	import com.structurecreator.view.ProfileSelectMediator;
+	import com.structurecreator.view.ProfileSelectView;
 	import com.structurecreator.view.ProjectFolderMediator;
 	import com.structurecreator.view.ProjectFolderView;
 	import com.structurecreator.view.SchemaSelectMediator;
@@ -87,8 +88,17 @@ package com.structurecreator
 			eventDispatcher.addEventListener(ProfileEvent.OPEN_SAVE_WINDOW, onOpenSaveProfile);
 			eventDispatcher.addEventListener(ProfileEvent.SAVE_PROFILE, onSaveProfile);
 			eventDispatcher.addEventListener(CustomVarsEvent.CANNOT_ADD_VAR, onCannotAddVar);
+			eventDispatcher.addEventListener(SchemaEvent.CREATE_NEW_SCHEMA, onCreateNewSchema);
 			
 			super.startup();
+		}
+		
+		private function onCreateNewSchema(e:SchemaEvent):void
+		{
+			trace("Open schema creator window");
+			var schemaWindow:SchemaCreator = new SchemaCreator();
+			schemaWindow.open();
+			//var 
 		}
 		
 		private function onCannotAddVar(e:CustomVarsEvent):void

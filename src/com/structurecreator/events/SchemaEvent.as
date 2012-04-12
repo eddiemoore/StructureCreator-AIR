@@ -5,6 +5,7 @@ package com.structurecreator.events
 	public class SchemaEvent extends Event
 	{
 		public static const SCHEMA_SELECTED:String = "schemaSelected";
+		public static const CREATE_NEW_SCHEMA:String = "createNewSchema";
 		
 		public function SchemaEvent(type:String)
 		{

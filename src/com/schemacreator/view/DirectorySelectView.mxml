@@ -10,6 +10,6 @@
 		<s:HorizontalLayout />
 	</s:layout>
 	
-	<s:TextInput width="100%" id="directoryField" />
+	<s:TextInput width="100%" id="directoryField" editable="false" />
 	<s:Button label="..." width="40" id="browseBtn" />
 </s:Group>

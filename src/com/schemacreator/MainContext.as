@@ -1,7 +1,9 @@
 package com.schemacreator
 {
 	
-	import com.schemacreator.model.FolderBrowse;
+	import com.schemacreator.model.SchemaModel;
+	import com.schemacreator.view.CreateSchemaBtnMediator;
+	import com.schemacreator.view.CreateSchemaBtnView;
 	import com.schemacreator.view.DirectorySelectMediator;
 	import com.schemacreator.view.DirectorySelectView;
 	
@@ -15,9 +17,10 @@ package com.schemacreator
 		
 		override public function startup():void
 		{
-			injector.mapSingleton(FolderBrowse);
+			injector.mapSingleton(SchemaModel);
 			
 			mediatorMap.mapView(DirectorySelectView, DirectorySelectMediator);
+			mediatorMap.mapView(CreateSchemaBtnView, CreateSchemaBtnMediator); 
 			
 			super.startup();
 		}

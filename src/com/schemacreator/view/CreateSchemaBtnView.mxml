@@ -2,14 +2,12 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx">
-	<s:layout>
-		<s:HorizontalLayout/>
-	</s:layout>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<s:Button id="saveBtn" label="Save Profile" />
-	
-	<s:Button id="createSchemaBtn" label="Create New Schema" />
+	<s:layout>
+		<s:HorizontalLayout horizontalAlign="center" />
+	</s:layout>
+	<s:Button id="createBtn" label="Create Schema" />
 </s:Group>
