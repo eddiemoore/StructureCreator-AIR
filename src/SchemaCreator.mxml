@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					   xmlns:s="library://ns.adobe.com/flex/spark" 
-					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   xmlns:schemacreator="com.schemacreator.*"
-					   xmlns:view="com.schemacreator.view.*"
-					   title="SchemaCreator"
-					   width="320" height="100" backgroundColor="#666666">
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:schemacreator="com.schemacreator.*"
+		  xmlns:view="com.schemacreator.view.*"
+		  title="SchemaCreator"
+		  width="320" height="100" backgroundColor="#666666">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<schemacreator:MainContext contextView="{this}" />

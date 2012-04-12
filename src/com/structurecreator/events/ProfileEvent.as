@@ -7,6 +7,7 @@ package com.structurecreator.events
 		public static const OPEN_SAVE_WINDOW:String = 'openSaveWindow';
 		public static const SAVE_PROFILE:String = 'saveProfile';
 		public static const PROFILE_CHANGED:String = 'profileChanged';
+		public static const EDIT_PROFILES:String = 'editProfile';
 
 		private var _name:String;
 		

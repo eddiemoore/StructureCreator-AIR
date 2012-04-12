@@ -21,6 +21,12 @@ package com.structurecreator.view
 		{
 			eventMap.mapListener(view.saveBtn, MouseEvent.CLICK, onSaveClick);
 			eventMap.mapListener(view.createSchemaBtn, MouseEvent.CLICK, onCreateSchemaBtnClick);
+			eventMap.mapListener(view.editProfiles, MouseEvent.CLICK, onEditProfilesClick);
+		}
+		
+		private function onEditProfilesClick(e:MouseEvent):void
+		{
+			eventDispatcher.dispatchEvent(new ProfileEvent(ProfileEvent.EDIT_PROFILES));
 		}
 		
 		private function onCreateSchemaBtnClick(e:MouseEvent):void

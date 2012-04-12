@@ -90,8 +90,16 @@ package com.structurecreator
 			eventDispatcher.addEventListener(ProfileEvent.SAVE_PROFILE, onSaveProfile);
 			eventDispatcher.addEventListener(CustomVarsEvent.CANNOT_ADD_VAR, onCannotAddVar);
 			eventDispatcher.addEventListener(SchemaEvent.CREATE_NEW_SCHEMA, onCreateNewSchema);
+			eventDispatcher.addEventListener(ProfileEvent.EDIT_PROFILES, onProfileEdit);
 			
 			super.startup();
+		}
+		
+		private function onProfileEdit(e:ProfileEvent):void
+		{
+			// TODO Auto Generated method stub
+			var editProfile:ProfileEditor = new ProfileEditor();
+			editProfile.open();
 		}
 		
 		private function onCreateNewSchema(e:SchemaEvent):void
