@@ -46,6 +46,7 @@ package com.structurecreator
 	{
 
 		private var _saveProfileWindow:SaveProfileWindow;
+		
 		public function MainContext()
 		{
 		}
