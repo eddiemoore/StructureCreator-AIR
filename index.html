@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>StructureCreator by nichmekof</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/nichmekof/StructureCreator-AIR">Fork Me on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>StructureCreator</h1>
+            <h2>Application to setup a project's base structure</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/nichmekof/StructureCreator-AIR/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/nichmekof/StructureCreator-AIR/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+      <span class="banner-fix"></span>
+
+      <section id="main_content">
+        <p>This AIR application is driven by either an xml schema or a zip file with template files, which can be customized to fit specific project requirements. 
+It automatically creates all files and folders that are in your schema file.</p>
+
+<p>Using this AIR app can effectively streamline new project creation work flow. It only takes a few clicks to achieve which usually can take hours to recreate, duplicate or customize from previous projects.</p>
+
+<h3>Are you using StructureCreator?</h3>
+
+<p>If you are using StructureCreator please email me <a href="mailto://eddie.moore@gmail.com">eddie.moore@gmail.com</a> and let me know what you think about StructureCreator. Was it useful? What could be improved?</p>
+
+<h3>Schema</h3>
+
+<p>There are 2 different ways you can use to create your schema. The first is by having a zip file with all your template files and folders inside. The second method is by using an xml based schema (see below).</p>
+
+<h3>SchemaCreator</h3>
+
+<p>Creating a xml schema file is as easy as a couple of clicks with <a href="http://github.com/nichmekof/SchemaCreator">SchemaCreator</a>.
+The handy little AIR app will help you create your own schema file from a folder of template files in no time at all. This will eventually be integrated into StructureCreator.</p>
+
+<h3>Example XML Schema</h3>
+
+<pre><code>&lt;folder name='%BASE%'&gt;
+    &lt;folder name='css'&gt;
+        &lt;file name='style.css'&gt;&lt;![CDATA[body { background:#FFF; color:#000; font:12px/16px Arial, san-serif; }]]&gt;&lt;/file&gt;
+    &lt;/folder&gt;
+    &lt;folder name='images' /&gt;
+    &lt;folder name='js'&gt;
+        &lt;file name='scripts.js' url='<a href="http://code.jquery.com/jquery-1.4.4.min.js">http://code.jquery.com/jquery-1.4.4.min.js</a>' /&gt;
+    &lt;/folder&gt;
+    &lt;folder name='xml' /&gt;
+    &lt;file name='index.html' url="<a href="http://example.com/templates/index.html">http://example.com/templates/index.html</a>" /&gt;
+&lt;/folder&gt;
+</code></pre>
+
+<h3>Create a folder</h3>
+
+<pre><code>&lt;folder name='XXXXX'&gt;&lt;/folder&gt;
+</code></pre>
+
+<p>This will create a folder with the name XXXXX</p>
+
+<h3>Create a file</h3>
+
+<pre><code>&lt;file name='XXXX.XXX' url='http://linktotemplate' /&gt;
+</code></pre>
+
+<p>This will create a file called XXXX.XXX (e.g index.html) based on a template file linked in the url attribute. 
+Replace http://linktotemplate with the link to your template file. More information on templates are located below.</p>
+
+<h3>Alternative method to create a text based file</h3>
+
+<pre><code>&lt;file name='example.txt'&gt;&lt;![CDATA[This is the text that will be inside the file]]&gt;&lt;/file&gt;
+</code></pre>
+
+<h2>Templates</h2>
+
+<p>If you are creating your own templates there are some variables that can be replaced with values when a new project is created. </p>
+
+<p>Variables are fully customisable. Using the custom variables section of StructureCreator just add as many variables as you need. 
+Just name your variable and give it a value. Variable names can be anything with alphanumeric characters but without spaces.
+They are in the form of <strong>%VARIABLENAME%</strong></p>
+
+<p>You can use template variables in any text based file, including *.docx, *.pptx and *.xlsx files. 
+With StructureCreator you also get the flexability of being able to customise your file names and folders using template variables.</p>
+
+<h3>For example:</h3>
+
+<pre><code>&lt;folder name='%CUSTOMFOLDERNAME%'&gt;&lt;/folder&gt;
+</code></pre>
+
+<h3>Example Template for index.html</h3>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;%PROJECTNAME% - Created with StructureCreator&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="container"&gt;
+        &lt;h1&gt;%PROJECTNAME%&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/nichmekof">nichmekof</a> can be found on <a href="https://github.com/nichmekof/StructureCreator-AIR">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-19476729-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
