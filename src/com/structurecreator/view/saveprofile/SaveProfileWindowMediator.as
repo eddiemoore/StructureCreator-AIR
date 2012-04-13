@@ -1,6 +1,8 @@
 package com.structurecreator.view.saveprofile
 {
 	import com.structurecreator.events.ProfileEvent;
+	import com.structurecreator.model.SchemaModel;
+	import com.structurecreator.view.SchemaSelectView;
 	
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -12,6 +14,9 @@ package com.structurecreator.view.saveprofile
 	{
 		[Inject]
 		public var view:SaveProfileWindow;
+		
+		[Inject]
+		public var schemaModel:SchemaModel;
 		
 		public function SaveProfileWindowMediator()
 		{
@@ -45,7 +50,7 @@ package com.structurecreator.view.saveprofile
 			if (view.profile_name.text != '')
 			{
 				trace("dispatch profile name");
-				eventDispatcher.dispatchEvent(new ProfileEvent(ProfileEvent.SAVE_PROFILE, view.profile_name.text));
+				eventDispatcher.dispatchEvent(new ProfileEvent(ProfileEvent.SAVE_PROFILE, view.profile_name.text, schemaModel.schemaURL));
 			}
 		}
 	}

@@ -10,15 +10,11 @@ package com.structurecreator.model
 	public class SchemaModel extends Actor
 	{
 		private var _schemaFile:File = File.documentsDirectory;
+		private var _schemaURL:String = '';
 		
 		public function SchemaModel()
 		{
 			
-		}
-		
-		public function get schemaFile():File
-		{
-			return _schemaFile;
 		}
 		
 		/**
@@ -35,7 +31,24 @@ package com.structurecreator.model
 		 */
 		protected function onSchemaSelected(event:Event):void
 		{
+			_schemaURL = _schemaFile.url;
 			eventDispatcher.dispatchEvent(new SchemaEvent(SchemaEvent.SCHEMA_SELECTED));
 		}
+		
+		public function get schemaFile():File
+		{
+			return _schemaFile;
+		}
+
+		public function get schemaURL():String
+		{
+			return _schemaURL;
+		}
+
+		public function set schemaURL(value:String):void
+		{
+			_schemaURL = value;
+		}
+
 	}
 }

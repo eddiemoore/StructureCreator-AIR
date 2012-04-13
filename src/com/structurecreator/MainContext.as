@@ -2,6 +2,7 @@ package com.structurecreator
 {
 	import com.structurecreator.controller.DatabaseCommand;
 	import com.structurecreator.controller.FileCommand;
+	import com.structurecreator.controller.ProfileChangeCommand;
 	import com.structurecreator.controller.ProfileCommand;
 	import com.structurecreator.events.CustomVarsEvent;
 	import com.structurecreator.events.FileEvent;
@@ -16,6 +17,7 @@ package com.structurecreator
 	import com.structurecreator.services.DatabaseService;
 	import com.structurecreator.services.FileCreateService;
 	import com.structurecreator.services.MicrosoftXFileService;
+	import com.structurecreator.services.ProfileService;
 	import com.structurecreator.view.CreateButtonMediator;
 	import com.structurecreator.view.CreateButtonView;
 	import com.structurecreator.view.CustomVariablesMediator;
@@ -64,6 +66,7 @@ package com.structurecreator
 			injector.mapSingleton(StructureCreatorModel);
 			injector.mapSingleton(CustomVariableModel);
 			injector.mapSingleton(DatabaseService);
+			injector.mapSingleton(ProfileService);
 			
 			/* Setup File Creation Services */
 			injector.mapClass(FileCreateService, FileCreateService);
@@ -86,6 +89,7 @@ package com.structurecreator
 			commandMap.mapEvent(FileEvent.START_CREATION, FileCommand, FileEvent);
 			commandMap.mapEvent(StructureCreatorEvent.APP_STARTED, DatabaseCommand, StructureCreatorEvent);
 			commandMap.mapEvent(ProfileEvent.SAVE_PROFILE, ProfileCommand, ProfileEvent);
+			commandMap.mapEvent(ProfileEvent.PROFILE_SELECTED, ProfileChangeCommand, ProfileEvent);
 			
 			/* Listen for creation complete event */
 			eventDispatcher.addEventListener(StructureCreatorEvent.CREATION_COMPLETE, onCreationComplete);

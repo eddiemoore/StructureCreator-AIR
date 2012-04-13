@@ -55,10 +55,11 @@ package com.structurecreator.services
 		/**
 		 * Insert a new profile into database
 		 */
-		public function addProfile(name:String = ''):void
+		public function addProfile(name:String = '', schema_url:String=''):void
 		{
-			addStatement("INSERT INTO profiles (name) SELECT '" + name +"' WHERE NOT EXISTS (SELECT 1 FROM profiles WHERE name = '" + name + "');");
-			trace("Add Profile " + name);
+			//addStatement("INSERT INTO profiles (name, schema_file) SELECT '" + name +"', '" + schema_url + "' WHERE NOT EXISTS (SELECT 1 FROM profiles WHERE name = '" + name + "');");
+			addStatement("INSERT INTO profiles (name, schema_file) VALUES('" + name + "', '" + schema_url + "');");
+			trace("Add Profile " + name, " : " + schema_url);
 			execute();
 			eventDispatcher.dispatchEvent(new DatabaseEvent(DatabaseEvent.DATABASE_UPDATED));
 		}

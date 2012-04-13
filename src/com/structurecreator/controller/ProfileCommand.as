@@ -24,7 +24,7 @@ package com.structurecreator.controller
 		override public function execute():void
 		{
 			trace("Add the profile");
-			service.addProfile(event.name);
+			service.addProfile(event.name, event.schema_url);
 		}
 	}
 }

@@ -69,7 +69,7 @@ package com.structurecreator.view
 		protected function onChange(event:IndexChangeEvent):void
 		{
 			trace("Profile Select Box Change");
-			eventDispatcher.dispatchEvent(new ProfileEvent(ProfileEvent.PROFILE_CHANGED, String(view.selectedItem.data)));
+			eventDispatcher.dispatchEvent(new ProfileEvent(ProfileEvent.PROFILE_SELECTED, String(view.selectedItem.data)));
 		}
 	}
 }
