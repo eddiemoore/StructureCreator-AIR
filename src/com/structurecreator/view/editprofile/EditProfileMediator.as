@@ -26,11 +26,12 @@ package com.structurecreator.view.editprofile
 		
 		override public function onRegister():void
 		{
-			
 			eventMap.mapListener(view.deleteBtn, MouseEvent.CLICK, onDeleteBtnClick);
 			eventMap.mapListener(view.exportBtn, MouseEvent.CLICK, onExportBtnClick);
 			
 			eventDispatcher.addEventListener(DatabaseEvent.DATABASE_UPDATED, onDatabaseUpdated);
+			
+			getAllProfiles();
 		}
 		
 		private function onDatabaseUpdated(e:DatabaseEvent):void
@@ -68,8 +69,10 @@ package com.structurecreator.view.editprofile
 		private function onDeleteBtnClick(e:MouseEvent):void
 		{
 			//get selected item from list
-			var selected:int = view.profileList.selectedIndex;
+			var selected:Object = provider[view.profileList.selectedIndex];
 			
+			model.deleteProfile(selected.data);
+			//trace(selected);
 		}
 	}
 }

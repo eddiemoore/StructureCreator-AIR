@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx">
+<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:structurecreator="com.structurecreator.*"
+		  xmlns:view="com.structurecreator.view.*"
+		  title="Manage Profiles"
+		  width="300" height="300" backgroundColor="#666666">
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<s:List id="profileList" width="100%"></s:List>
+	<s:layout>
+		<s:VerticalLayout paddingTop="10" paddingRight="10" paddingBottom="10" paddingLeft="10" />
+	</s:layout>
 	
-	<s:Button id="deleteBtn" label="Delete" />
-	<s:Button id="exportBtn" label="Export" />
-</s:Group>
+	<s:List id="profileList" width="100%" height="100%"></s:List>
+	
+	<s:HGroup width="100%">
+		<s:Button id="deleteBtn" label="Delete" />
+		<s:Button id="exportBtn" label="Export" />
+	</s:HGroup>
+	
+</s:Window>

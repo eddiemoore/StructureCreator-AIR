@@ -75,6 +75,16 @@ package com.structurecreator.services
 		}
 		
 		/**
+		 * Removes a profile by ID
+		 */
+		public function deleteProfile(id:int):void
+		{
+			addStatement("DELETE FROM profiles WHERE profile_id='" + id + "';");
+			execute();
+			eventDispatcher.dispatchEvent(new DatabaseEvent(DatabaseEvent.DATABASE_UPDATED));
+		}
+		
+		/**
 		 * Find and return profile given ID
 		 */
 		public function selectProfile(id:int):Array

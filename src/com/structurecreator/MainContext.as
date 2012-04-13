@@ -30,6 +30,8 @@ package com.structurecreator
 	import com.structurecreator.view.SchemaSelectView;
 	import com.structurecreator.view.customvars.CustomVariableBarMediator;
 	import com.structurecreator.view.customvars.CustomVariableBarView;
+	import com.structurecreator.view.editprofile.EditProfileMediator;
+	import com.structurecreator.view.editprofile.EditProfileView;
 	import com.structurecreator.view.saveprofile.SaveProfileWindow;
 	import com.structurecreator.view.saveprofile.SaveProfileWindowMediator;
 	
@@ -40,6 +42,7 @@ package com.structurecreator
 	import mx.core.IFlexDisplayObject;
 	import mx.managers.PopUpManager;
 	
+	import org.robotlegs.base.MediatorMap;
 	import org.robotlegs.mvcs.Context;
 	
 	public class MainContext extends Context
@@ -77,6 +80,7 @@ package com.structurecreator
 			mediatorMap.mapView(CustomVariableBarView, CustomVariableBarMediator);
 			mediatorMap.mapView(ProfileButtonsView, ProfileButtonsMediator);
 			mediatorMap.mapView(SaveProfileWindow, SaveProfileWindowMediator);
+			mediatorMap.mapView(EditProfileView, EditProfileMediator);
 			
 			/* Commands for file creation */
 			commandMap.mapEvent(FileEvent.START_CREATION, FileCommand, FileEvent);
@@ -98,8 +102,10 @@ package com.structurecreator
 		private function onProfileEdit(e:ProfileEvent):void
 		{
 			// TODO Auto Generated method stub
-			var editProfile:ProfileEditor = new ProfileEditor();
+			var editProfile:EditProfileView = new EditProfileView();
 			editProfile.open();
+			
+			mediatorMap.createMediator(editProfile);
 		}
 		
 		private function onCreateNewSchema(e:SchemaEvent):void
